@@ -1,1 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pasitos para el primer día de chamba</title>
+  <style>
+    :root{
+      --bg: #0b1220;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.09);
+      --ink: #eaf0ff;
+      --muted: rgba(234,240,255,.75);
+      --line: rgba(255,255,255,.12);
+      --accent: #6ea8ff;
+      --ok: #22c55e;
+      --warn: #fbbf24;
+      --bad: #ef4444;
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+    }
+
+    *{ box-sizing: border-box; }
+    body{
+      margin: 0;
+      min-height: 100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", "Noto Sans", "Liberation Sans", sans-serif;
+      background:
+        radial-gradient(900px 500px at 20% 10%, rgba(110,168,255,.18), transparent 60%),
+        radial-gradient(700px 500px at 85% 25%, rgba(34,197,94,.14), transparent 55%),
+        radial-gradient(900px 700px at 50% 95%, rgba(251,191,36,.10), transparent 55%),
+        var(--bg);
+      color: var(--ink);
+      padding: 22px;
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 920px){
+      .wrap{ grid-template-columns: 1fr; }
+    }
+
+    header{
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 18px 0;
+    }
+
+    .title{
+      display:flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    h1{
+      margin: 0;
+      font-size: clamp(20px, 2.2vw, 28px);
+      letter-spacing: .2px;
+    }
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(110,168,255,.18);
+    }
+
+    .panel{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panelHead{
+      padding: 16px 16px 0;
+      display:flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .progressWrap{
+      padding: 14px 16px 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .progressLine{
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
+      overflow: hidden;
+    }
+    .bar{
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, rgba(110,168,255,.95), rgba(34,197,94,.9));
+      border-radius: 999px;
+      transition: width .25s ease;
+    }
+
+    .meta{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .stepCard{
+      margin: 0 16px 16px;
+      padding: 16px;
+      background: var(--card2);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+    }
+
+    .stepTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: var(--muted);
+      font-size: 12px;
+      user-select: none;
+    }
+
+    .badge strong{ color: var(--ink); font-weight: 700; }
+
+    .check{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      user-select: none;
+    }
+
+    .check input{
+      width: 18px;
+      height: 18px;
+      accent-color: var(--ok);
+      cursor: pointer;
+    }
+    .check label{
+      cursor:pointer;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .stepText{
+      font-size: 16px;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .callouts{
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .callout{
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .callout b{ color: var(--ink); }
+
+    .actions{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 0 16px 16px;
+    }
+
+    button{
+      appearance: none;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      color: var(--ink);
+      padding: 10px 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: .2px;
+      transition: transform .08s ease, background .18s ease, border-color .18s ease;
+    }
+    button:hover{ background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.22); }
+    button:active{ transform: translateY(1px); }
+    button:disabled{
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .primary{
+      background: rgba(110,168,255,.18);
+      border-color: rgba(110,168,255,.35);
+    }
+    .primary:hover{ background: rgba(110,168,255,.26); }
+
+    .danger{
+      background: rgba(239,68,68,.16);
+      border-color: rgba(239,68,68,.35);
+    }
+    .danger:hover{ background: rgba(239,68,68,.24); }
+
+    .side{
+      display:grid;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .side h2{
+      margin: 0;
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+
+    .list{
+      display:grid;
+      gap: 10px;
+    }
+
+    .item{
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+      padding: 10px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      cursor: pointer;
+      transition: background .15s ease, border-color .15s ease;
+    }
+    .item:hover{
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.18);
+    }
+
+    .num{
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      display:flex;
+      align-items:center;
+      justify-content: center;
+      font-weight: 900;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      flex: 0 0 auto;
+      user-select: none;
+    }
+
+    .txt{
+      display:flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+    .txt .mini{
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.25;
+    }
+    .txt .main{
+      font-size: 13px;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+
+    .active{
+      border-color: rgba(110,168,255,.35) !important;
+      background: rgba(110,168,255,.10) !important;
+    }
+
+    .done .num{
+      background: rgba(34,197,94,.20);
+      border-color: rgba(34,197,94,.35);
+    }
+    .done .num::after{
+      content: "✓";
+      font-weight: 900;
+    }
+    .done .num{ color: transparent; position: relative; }
+    .done .num::after{
+      color: rgba(234,240,255,.92);
+      position: absolute;
+    }
+
+    .footerNote{
+      grid-column: 1 / -1;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 0 18px 18px;
+      opacity: .9;
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      background: rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 2px 6px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>Pasitos para el primer día de chamba</h1>
+        <p class="subtitle">
+          Guía interactiva: avanza paso por paso, marca “Hecho” y usa <span class="kbd">Reset</span> si te confundes.
+        </p>
+      </div>
+      <div class="pill" id="statusPill" title="Estado actual">
+        <span class="dot" id="statusDot"></span>
+        <span id="statusText">Listo para empezar</span>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <section class="panel" aria-label="Paso actual">
+      <div class="panelHead">
+        <div class="badge" id="stepBadge">
+          <strong>Paso 1</strong> <span id="stepOf">de 16</span>
+        </div>
+
+        <div class="check">
+          <input type="checkbox" id="doneCheck" />
+          <label for="doneCheck">Hecho</label>
+        </div>
+      </div>
+
+      <div class="progressWrap">
+        <div class="progressLine" aria-label="Progreso">
+          <div class="bar" id="bar"></div>
+        </div>
+        <div class="meta">
+          <span id="progressText">0 / 16 completados</span>
+          <span id="hint">Tip: usa ← → del teclado</span>
+        </div>
+      </div>
+
+      <div class="stepCard">
+        <div class="stepTop">
+          <div class="badge" id="tagBadge">Preparación</div>
+          <div class="badge" id="dangerBadge" style="display:none;border-color:rgba(251,191,36,.35);background:rgba(251,191,36,.10);">
+            ⚠️ Ojo
+          </div>
+        </div>
+
+        <p class="stepText" id="stepText"></p>
+
+        <div class="callouts" id="callouts"></div>
+      </div>
+
+      <div class="actions">
+        <button id="prevBtn">⬅️ Anterior</button>
+        <button class="primary" id="nextBtn">Siguiente ➡️</button>
+        <button class="danger" id="resetBtn" title="Reinicia el progreso">Reset</button>
+      </div>
+    </section>
+
+    <!-- SIDE LIST -->
+    <aside class="panel" aria-label="Lista de pasos">
+      <div class="side">
+        <h2>Lista rápida (click para ir)</h2>
+        <div class="list" id="list"></div>
+      </div>
+    </aside>
+
+    <div class="footerNote">
+      Pro tip: antes de salir, revisa batería, extensión, termocontraíble, cintillos y que el app esté logueado.
+    </div>
+  </div>
+
+  <script>
+    const steps = [
+      {
+        tag: "Preparación",
+        text: "Cuando estés a 8 o 5 minutos de la bodega, conecta la batería al GPS para que vaya cargando (al menos 3 dispositivos).",
+        notes: ["<b>Meta:</b> llegar con equipos cargados y sin apuros."]
+      },
+      {
+        tag: "Llegada",
+        text: "Al llegar al punto, preséntate como técnico y procede con la instalación.",
+        notes: ["Habla claro, tranquilo y directo."]
+      },
+      {
+        tag: "Energía",
+        text: "Al pasar, desconecta la nevera y conecta tu extensión al tomacorriente. Luego espera entre 3 y 5 minutos.",
+        warn: true,
+        notes: ["<b>Importante:</b> respeta el tiempo de espera (3–5 min)."]
+      },
+      {
+        tag: "App / Verificación",
+        text: "Abre el aplicativo y escanea el código de la nevera (el que está al lado). Luego verifica que aparezca en 0 y sin IMEI; si está así, empieza a sacar tus cosas.",
+        notes: ["Si ya aparece con datos, revisa bien antes de continuar."]
+      },
+      {
+        tag: "Instalación (si no hay GPS)",
+        text: "Si la nevera no tiene dispositivo GPS, saca la rejilla y ubica el punto, la línea y la fase.",
+        warn: true,
+        notes: ["<b>Ojo:</b> identifica bien punto/línea/fase antes de cortar."]
+      },
+      {
+        tag: "Cableado",
+        text: "Corta de lleno, agrega el termocontraíble para que no se te olvide (NO SE TE OLVIDE) y coloca el cintillo más o menos para que ya se pueda ajustar.",
+        warn: true,
+        notes: ["Termocontraíble listo antes de cerrar el empalme."]
+      },
+      {
+        tag: "Escaneo GPS",
+        text: "Como ya pasó el tiempo recomendado, abre la cámara para el código de barras y escanea el dispositivo GPS para confirmar si ya está listo.",
+        notes: ["Si falla, limpia el lente y enfoca bien el código."]
+      },
+      {
+        tag: "Sincronización",
+        text: "Si ambos datos se llenan, presiona la flecha y verifica que aparezca “Sincronizado”. Si aparece en gris, puedes hacer eventos: desconecta y conecta; después debería aparecer conectado.",
+        warn: true,
+        notes: ["Gris = prueba reconexión / eventos. Verde = ok."]
+      },
+      {
+        tag: "Reporte",
+        text: "Si ya está en verde, manda una captura al grupo para que los gestores revisen el dispositivo.",
+        notes: ["Captura donde se vea el estado en verde + datos."]
+      },
+      {
+        tag: "Acta",
+        text: "Si aparece “Sincronizado”, comienza a llenar los cuadritos de la acta.",
+        notes: ["Hazlo con calma: mejor correcto que rápido."]
+      },
+      {
+        tag: "Empalme final",
+        text: "Quita el dispositivo que estaba en la extensión (el que se sincronizó) y empálmalo al tomacorriente. Luego quema el termocontraíble.",
+        warn: true,
+        notes: ["Asegura bien el empalme antes de sellar."]
+      },
+      {
+        tag: "Fotos",
+        text: "Toma las fotos según indique el aplicativo.",
+        notes: ["Sigue el orden del app para que no te falte ninguna."]
+      },
+      {
+        tag: "Cierre",
+        text: "Cierra todo para tomar la foto del dispositivo cerrado con la rejilla cerrada. Luego toma foto a la nevera en tamaño completo.",
+        notes: ["Que se vea limpio: rejilla cerrada y encuadre completo."]
+      },
+      {
+        tag: "Re-energizar",
+        text: "Desconecta la extensión del tomacorriente y vuelve a energizar la nevera.",
+        warn: true,
+        notes: ["Verifica que todo esté seguro antes de energizar."]
+      },
+      {
+        tag: "Revisión final",
+        text: "Verifica que el dispositivo siga sincronizado presionando la flechita nuevamente.",
+        notes: ["Último check antes de cerrar el trabajo."]
+      },
+      {
+        tag: "Cierre y envío",
+        text: "Pide los datos del cliente y su firma. Luego entra a “Vista previa” y presiona “Finalizado”. Después ve a “Historial”, verifica tu acta y compártela en el grupo.",
+        notes: ["Si falta algo, corrígelo antes de “Finalizado”.", "<b>Checklist:</b> datos + firma + acta en historial."]
+      }
+    ];
+
+    const LS_KEY = "pasitos_chamba_v1";
+
+    const $ = (id) => document.getElementById(id);
+
+    const stepText = $("stepText");
+    const stepBadge = $("stepBadge");
+    const stepOf = $("stepOf");
+    const bar = $("bar");
+    const doneCheck = $("doneCheck");
+    const prevBtn = $("prevBtn");
+    const nextBtn = $("nextBtn");
+    const resetBtn = $("resetBtn");
+    const list = $("list");
+    const progressText = $("progressText");
+    const tagBadge = $("tagBadge");
+    const dangerBadge = $("dangerBadge");
+    const callouts = $("callouts");
+    const statusText = $("statusText");
+    const statusDot = $("statusDot");
+
+    let state = {
+      idx: 0,
+      done: Array(steps.length).fill(false)
+    };
+
+    function load(){
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        if(!raw) return;
+        const parsed = JSON.parse(raw);
+        if(typeof parsed?.idx === "number" && Array.isArray(parsed?.done)){
+          state.idx = Math.max(0, Math.min(steps.length-1, parsed.idx));
+          state.done = parsed.done.slice(0, steps.length).map(Boolean);
+          while(state.done.length < steps.length) state.done.push(false);
+        }
+      }catch(e){}
+    }
+
+    function save(){
+      localStorage.setItem(LS_KEY, JSON.stringify(state));
+    }
+
+    function completedCount(){
+      return state.done.filter(Boolean).length;
+    }
+
+    function updateStatusPill(){
+      const done = completedCount();
+      if(done === 0){
+        statusText.textContent = "Listo para empezar";
+        statusDot.style.background = "var(--accent)";
+        statusDot.style.boxShadow = "0 0 0 4px rgba(110,168,255,.18)";
+      }else if(done < steps.length){
+        statusText.textContent = `En progreso (${done}/${steps.length})`;
+        statusDot.style.background = "var(--warn)";
+        statusDot.style.boxShadow = "0 0 0 4px rgba(251,191,36,.16)";
+      }else{
+        statusText.textContent = "Todo completado ✅";
+        statusDot.style.background = "var(--ok)";
+        statusDot.style.boxShadow = "0 0 0 4px rgba(34,197,94,.16)";
+      }
+    }
+
+    function renderList(){
+      list.innerHTML = "";
+      steps.forEach((s, i) => {
+        const div = document.createElement("div");
+        div.className = "item" + (i === state.idx ? " active" : "") + (state.done[i] ? " done" : "");
+        div.addEventListener("click", () => {
+          state.idx = i;
+          save();
+          render();
+        });
+
+        const num = document.createElement("div");
+        num.className = "num";
+        num.textContent = (i+1);
+
+        const txt = document.createElement("div");
+        txt.className = "txt";
+
+        const mini = document.createElement("div");
+        mini.className = "mini";
+        mini.textContent = s.tag;
+
+        const main = document.createElement("div");
+        main.className = "main";
+        main.textContent = s.text.length > 64 ? (s.text.slice(0, 64) + "…") : s.text;
+
+        txt.appendChild(mini);
+        txt.appendChild(main);
+
+        div.appendChild(num);
+        div.appendChild(txt);
+        list.appendChild(div);
+      });
+    }
+
+    function render(){
+      const s = steps[state.idx];
+
+      stepText.textContent = s.text;
+      stepBadge.innerHTML = `<strong>Paso ${state.idx+1}</strong> <span id="stepOf">de ${steps.length}</span>`;
+      tagBadge.textContent = s.tag;
+
+      dangerBadge.style.display = s.warn ? "inline-flex" : "none";
+
+      doneCheck.checked = !!state.done[state.idx];
+
+      prevBtn.disabled = state.idx === 0;
+      nextBtn.disabled = state.idx === steps.length - 1;
+
+      const done = completedCount();
+      progressText.textContent = `${done} / ${steps.length} completados`;
+      bar.style.width = `${Math.round((done/steps.length)*100)}%`;
+
+      callouts.innerHTML = "";
+      (s.notes || []).forEach(n => {
+        const c = document.createElement("div");
+        c.className = "callout";
+        c.innerHTML = n;
+        callouts.appendChild(c);
+      });
+
+      renderList();
+      updateStatusPill();
+    }
+
+    doneCheck.addEventListener("change", () => {
+      state.done[state.idx] = doneCheck.checked;
+      save();
+      render();
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if(state.idx > 0){
+        state.idx--;
+        save();
+        render();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if(state.idx < steps.length - 1){
+        state.idx++;
+        save();
+        render();
+      }
+    });
+
+    resetBtn.addEventListener("click", () => {
+      state.idx = 0;
+      state.done = Array(steps.length).fill(false);
+      save();
+      render();
+    });
+
+    // Teclas: izquierda / derecha
+    window.addEventListener("keydown", (e) => {
+      if(e.key === "ArrowLeft") prevBtn.click();
+      if(e.key === "ArrowRight") nextBtn.click();
+    });
+
+    load();
+    render();
+  </script>
+</body>
+</html>
 
