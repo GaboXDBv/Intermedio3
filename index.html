@@ -18,6 +18,9 @@
       --danger:#ef4444;
     }
     *{box-sizing:border-box}
+    html{
+      scroll-behavior:smooth;
+    }
     body{
       margin:0;
       font-family:Arial, Helvetica, sans-serif;
@@ -53,6 +56,7 @@
       background:var(--soft);
       border-radius:999px;
       font-size:.95rem;
+      transition:0.25s ease;
     }
     nav a:hover{background:#475569}
     main{max-width:1100px;margin:auto;padding:24px 18px 60px}
@@ -94,10 +98,25 @@
       overflow:hidden;
       border-radius:14px;
     }
-    th,td{padding:12px;border:1px solid rgba(255,255,255,.08);vertical-align:top}
-    th{background:#0f3b58;color:#e0f2fe}
+    th,td{
+      padding:12px;
+      border:1px solid rgba(255,255,255,.08);
+      vertical-align:top
+    }
+    th{
+      background:#0f3b58;
+      color:#e0f2fe
+    }
     tr:nth-child(even){background:rgba(255,255,255,.03)}
-    .tag{display:inline-block;background:#0f3b58;color:#dbeafe;border-radius:999px;padding:4px 10px;margin:4px 6px 0 0;font-size:.88rem}
+    .tag{
+      display:inline-block;
+      background:#0f3b58;
+      color:#dbeafe;
+      border-radius:999px;
+      padding:4px 10px;
+      margin:4px 6px 0 0;
+      font-size:.88rem
+    }
     .exercise{
       background:#0b1220;
       border:1px solid rgba(56,189,248,.2);
@@ -105,7 +124,12 @@
       padding:18px;
       margin-top:16px;
     }
-    .q{margin-bottom:16px;padding:14px;background:#111827;border-radius:14px}
+    .q{
+      margin-bottom:16px;
+      padding:14px;
+      background:#111827;
+      border-radius:14px
+    }
     .q p{margin:0 0 10px}
     select,input[type="text"]{
       width:100%;
@@ -126,14 +150,59 @@
       font-weight:bold;
       border-radius:12px;
       cursor:pointer;
+      transition:0.25s ease;
     }
     button:hover{filter:brightness(1.05)}
+    .next-topic{
+      text-align:center;
+      margin-top:32px;
+    }
+    .next-topic a{
+      display:inline-block;
+      text-decoration:none;
+      background:linear-gradient(135deg, var(--accent), #60a5fa);
+      color:#082f49;
+      font-weight:bold;
+      padding:14px 24px;
+      border-radius:14px;
+      box-shadow:0 10px 20px rgba(56,189,248,.2);
+      transition:0.25s ease;
+    }
+    .next-topic a:hover{
+      transform:translateY(-2px) scale(1.02);
+      filter:brightness(1.05);
+    }
     .result{margin-top:16px;font-weight:bold}
     .good{color:#4ade80}
     .bad{color:#f87171}
-    footer{text-align:center;color:var(--muted);padding:24px 16px 40px}
+    footer{
+      text-align:center;
+      color:var(--muted);
+      padding:24px 16px 40px
+    }
     ul li{margin-bottom:8px}
-    code{background:#0b1220;padding:2px 8px;border-radius:8px}
+    code{
+      background:#0b1220;
+      padding:2px 8px;
+      border-radius:8px
+    }
+
+    @media (max-width: 768px){
+      nav{
+        gap:8px;
+        padding:10px;
+      }
+      nav a{
+        font-size:.88rem;
+        padding:8px 12px;
+      }
+      section{
+        padding:18px;
+      }
+      table{
+        font-size:.92rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -494,6 +563,10 @@
         <button onclick="checkB()">Revisar Parte B</button>
         <div id="resultB" class="result"></div>
       </div>
+
+      <div class="next-topic">
+        <a href="tema6b.html">SIGUIENTE TEMA →</a>
+      </div>
     </section>
   </main>
 
@@ -544,5 +617,6 @@
   </script>
 </body>
 </html>
+
 
 
