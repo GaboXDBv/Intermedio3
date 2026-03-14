@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preguntas Infinitas de Inglés</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#111827;
+      --card:#1f2937;
+      --soft:#334155;
+      --text:#f8fafc;
+      --muted:#cbd5e1;
+      --accent:#38bdf8;
+      --accent2:#22c55e;
+      --accent3:#f59e0b;
+      --danger:#ef4444;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#07101d,#0f172a 40%,#111827);
+      color:var(--text);
+      line-height:1.6;
+      min-height:100vh;
+    }
+    header{
+      padding:42px 20px 24px;
+      text-align:center;
+      background:radial-gradient(circle at top, rgba(56,189,248,.22), transparent 35%);
+    }
+    header h1{margin:0;font-size:clamp(2rem,4vw,3.2rem)}
+    header p{max-width:950px;margin:12px auto 0;color:var(--muted)}
+    main{max-width:1100px;margin:auto;padding:22px 16px 70px}
+    .panel{
+      background:rgba(17,24,39,.88);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:22px;
+      padding:22px;
+      margin:18px 0;
+      box-shadow:0 10px 28px rgba(0,0,0,.25);
+    }
+    h2{margin:0 0 14px;color:var(--accent)}
+    .controls{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:14px;
+      align-items:end;
+    }
+    label{display:block;font-weight:bold;margin-bottom:6px}
+    select,button,input[type="text"]{
+      width:100%;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid #64748b;
+      background:#020617;
+      color:#fff;
+      font-size:1rem;
+    }
+    button{
+      background:var(--accent);
+      color:#082f49;
+      font-weight:bold;
+      border:none;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    button:hover{filter:brightness(1.05);transform:translateY(-1px)}
+    .secondary{background:#1d4ed8;color:#eff6ff}
+    .success{background:var(--accent2);color:#052e16}
+    .warning{background:var(--accent3);color:#3b1d00}
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:12px;
+      margin-top:14px;
+    }
+    .stat{
+      background:var(--card);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      padding:14px;
+      text-align:center;
+    }
+    .stat .num{font-size:1.4rem;font-weight:bold;color:var(--accent)}
+    .question-card{
+      background:#0b1220;
+      border:1px solid rgba(56,189,248,.18);
+      border-radius:22px;
+      padding:22px;
+    }
+    .badge{
+      display:inline-block;
+      background:#0f3b58;
+      color:#dbeafe;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:.86rem;
+      margin-right:8px;
+      margin-bottom:8px;
+    }
+    .question-text{font-size:1.2rem;margin:14px 0 18px}
+    .options{display:grid;gap:10px}
+    .option{
+      text-align:left;
+      background:#111827;
+      color:#fff;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:14px;
+      padding:14px;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .option:hover{background:#172033}
+    .option.correct{border-color:#22c55e;background:rgba(34,197,94,.14)}
+    .option.wrong{border-color:#ef4444;background:rgba(239,68,68,.14)}
+    .feedback{
+      margin-top:16px;
+      padding:14px;
+      border-radius:14px;
+      display:none;
+    }
+    .feedback.show{display:block}
+    .feedback.good{background:rgba(34,197,94,.14);border:1px solid rgba(34,197,94,.4);color:#bbf7d0}
+    .feedback.bad{background:rgba(239,68,68,.14);border:1px solid rgba(239,68,68,.4);color:#fecaca}
+    .explanation{margin-top:8px;color:#e2e8f0}
+    .history{
+      max-height:380px;
+      overflow:auto;
+      padding-right:6px;
+    }
+    .history-item{
+      background:var(--card);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:14px;
+      padding:12px;
+      margin-bottom:10px;
+    }
+    .small{color:var(--muted);font-size:.95rem}
+    .tags{margin:10px 0 0}
+    .row-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+    .empty{color:var(--muted);font-style:italic}
+    footer{text-align:center;color:var(--muted);padding:10px 16px 40px}
+    @media (max-width:700px){
+      .question-text{font-size:1.08rem}
+      .panel,.question-card{padding:16px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Preguntas Infinitas de Inglés</h1>
+    <p>Práctica ilimitada con todos los temas que vimos: <strong>Passive (all tenses)</strong>, <strong>modals of deduction</strong>, <strong>vocabulario de cine</strong>, <strong>partes del cuerpo</strong>, <strong>verbos de acción</strong> y <strong>pronunciación</strong>.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Configuración de práctica</h2>
+      <div class="controls">
+        <div>
+          <label for="topicSelect">Tema</label>
+          <select id="topicSelect">
+            <option value="all">Todos los temas</option>
+            <option value="passive">Passive (all tenses)</option>
+            <option value="cinema">Vocabulario de cine</option>
+            <option value="modals">Modals of deduction</option>
+            <option value="body">Partes del cuerpo</option>
+            <option value="actions">Verbos de acción</option>
+            <option value="pronunciation">Pronunciación</option>
+          </select>
+        </div>
+        <div>
+          <label for="difficultySelect">Dificultad</label>
+          <select id="difficultySelect">
+            <option value="mixed">Mixta</option>
+            <option value="easy">Fácil</option>
+            <option value="medium">Media</option>
+            <option value="hard">Difícil</option>
+          </select>
+        </div>
+        <div>
+          <label for="modeSelect">Modo</label>
+          <select id="modeSelect">
+            <option value="multiple">Opción múltiple</option>
+            <option value="mixed">Mixto</option>
+            <option value="input">Escribir respuesta</option>
+          </select>
+        </div>
+        <div>
+          <button id="startBtn">Generar pregunta</button>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="num" id="scoreNum">0</div><div>Aciertos</div></div>
+        <div class="stat"><div class="num" id="wrongNum">0</div><div>Errores</div></div>
+        <div class="stat"><div class="num" id="streakNum">0</div><div>Racha</div></div>
+        <div class="stat"><div class="num" id="totalNum">0</div><div>Total</div></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Pregunta actual</h2>
+      <div class="question-card">
+        <div id="meta"></div>
+        <div class="question-text" id="questionText">Pulsa <strong>Generar pregunta</strong> para empezar.</div>
+        <div id="answerArea"></div>
+        <div class="row-buttons">
+          <button class="secondary" id="checkBtn" style="display:none;">Revisar respuesta</button>
+          <button class="success" id="nextBtn" style="display:none;">Siguiente pregunta</button>
+          <button class="warning" id="resetBtn">Reiniciar estadísticas</button>
+        </div>
+        <div id="feedback" class="feedback"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Historial rápido</h2>
+      <div id="history" class="history">
+        <div class="empty">Todavía no has respondido preguntas.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Página interactiva de práctica infinita de inglés
+  </footer>
+
+  <script>
+    const state = {
+      current: null,
+      score: 0,
+      wrong: 0,
+      streak: 0,
+      total: 0,
+      history: []
+    };
+
+    const passiveTemplates = [
+      {
+        difficulty:'easy', type:'multiple',
+        build:()=>({
+          topic:'passive', label:'Passive (all tenses)',
+          prompt:'Choose the correct passive form: "The soundtrack ______ already been recorded."',
+          options:['have already', 'has already', 'is already', 'was already'],
+          answer:'has already',
+          explanation:'Con "The soundtrack" usamos singular, así que va "has been recorded".'
+        })
+      },
+      {
+        difficulty:'easy', type:'input',
+        build:()=>({
+          topic:'passive', label:'Passive (all tenses)',
+          prompt:'Complete: They subtitle a lot of foreign films. → A lot of foreign films ______.',
+          answers:['are subtitled'],
+          explanation:'En presente simple pasivo usamos am/is/are + past participle. Aquí: are subtitled.'
+        })
+      },
+      {
+        difficulty:'medium', type:'multiple',
+        build:()=>({
+          topic:'passive', label:'Passive (all tenses)',
+          prompt:'Choose the correct sentence.',
+          options:['My laptop is repairing.', 'My laptop is being repaired.', 'My laptop repaired.', 'My laptop has repairing.'],
+          answer:'My laptop is being repaired.',
+          explanation:'Para presente continuo pasivo usamos is being + participio.'
+        })
+      },
+      {
+        difficulty:'medium', type:'input',
+        build:()=>({
+          topic:'passive', label:'Passive (all tenses)',
+          prompt:'Transform: Damien Chazelle directed La La Land. → La La Land ______ Damien Chazelle.',
+          answers:['was directed by'],
+          explanation:'En pasado simple pasivo: was/were + past participle + by.'
+        })
+      },
+      {
+        difficulty:'hard', type:'multiple',
+        build:()=>({
+          topic:'passive', label:'Passive (all tenses)',
+          prompt:'Choose the best passive transformation: "They hadn’t told the actor about the changes in the script."',
+          options:['The actor hadn’t been told about the changes in the script.', 'The actor hasn’t told about the changes in the script.', 'The actor hadn’t told about the changes in the script.', 'The actor wasn’t being told about the changes in the script.'],
+          answer:'The actor hadn’t been told about the changes in the script.',
+          explanation:'Past perfect passive = had not been + participle.'
+        })
+      },
+      {
+        difficulty:'hard', type:'input',
+        build:()=>({
+          topic:'passive', label:'Passive (all tenses)',
+          prompt:'Complete with a passive modal: This bill ______ tomorrow. (must / pay)',
+          answers:['must be paid'],
+          explanation:'Con modales en pasiva: modal + be + past participle.'
+        })
+      }
+    ];
+
+    const cinemaTemplates = [
+      {difficulty:'easy', type:'multiple', build:()=>({topic:'cinema', label:'Vocabulario de cine', prompt:'The music of a film is called the ______.', options:['plot','soundtrack','review','critic'], answer:'soundtrack', explanation:'"Soundtrack" es la banda sonora de una película.'})},
+      {difficulty:'easy', type:'input', build:()=>({topic:'cinema', label:'Vocabulario de cine', prompt:'A film which continues the story of an earlier film is a ______.', answers:['sequel','a sequel'], explanation:'"Sequel" significa secuela.'})},
+      {difficulty:'medium', type:'multiple', build:()=>({topic:'cinema', label:'Vocabulario de cine', prompt:'A person who writes film reviews for the press is a ______.', options:['critic','extra','star','audience'], answer:'critic', explanation:'Un "critic" es un crítico de cine.'})},
+      {difficulty:'medium', type:'input', build:()=>({topic:'cinema', label:'Vocabulario de cine', prompt:'The words of a film are called the ______.', answers:['script','the script'], explanation:'"Script" significa guion.'})},
+      {difficulty:'hard', type:'multiple', build:()=>({topic:'cinema', label:'Vocabulario de cine', prompt:'Choose the correct meaning of "extra" in cinema.', options:['The main actor', 'A person who writes the soundtrack', 'A person with a very small part in a film', 'The final scene of a movie'], answer:'A person with a very small part in a film', explanation:'Un "extra" suele aparecer como parte del fondo o una multitud.'})},
+      {difficulty:'hard', type:'input', build:()=>({topic:'cinema', label:'Vocabulario de cine', prompt:'The place where a film is being shot; the scenery used for a film or play is called the ______.', answers:['set','the set'], explanation:'"Set" es el escenario o set de grabación.'})}
+    ];
+
+    const modalTemplates = [
+      {difficulty:'easy', type:'multiple', build:()=>({topic:'modals', label:'Modals of deduction', prompt:'He’s carrying a camera and a guide book. He ______ be a tourist.', options:['must','can’t','might not','won’t'], answer:'must', explanation:'Las pistas muestran una deducción fuerte: must.'})},
+      {difficulty:'easy', type:'input', build:()=>({topic:'modals', label:'Modals of deduction', prompt:'It’s freezing and he isn’t wearing a jumper. He ______ be cold.', answers:['must'], explanation:'Con evidencia fuerte usamos must.'})},
+      {difficulty:'medium', type:'multiple', build:()=>({topic:'modals', label:'Modals of deduction', prompt:'I’m not sure, but she ______ have a new partner.', options:['must','might','can’t','must not'], answer:'might', explanation:'Cuando no estás seguro y solo es posible, usas might.'})},
+      {difficulty:'medium', type:'input', build:()=>({topic:'modals', label:'Modals of deduction', prompt:'He isn’t wearing a suit. He ______ be a businessman.', answers:["can't",'cant'], explanation:'Si algo parece imposible, usamos can’t.'})},
+      {difficulty:'hard', type:'multiple', build:()=>({topic:'modals', label:'Modals of deduction', prompt:'Choose the best option: "I’m not sure. She ______ like it. It’s a bit short for her."', options:['must','might not','can’t','must not'], answer:'might not', explanation:'Existe la posibilidad de que no le guste, así que va might not.'})},
+      {difficulty:'hard', type:'input', build:()=>({topic:'modals', label:'Modals of deduction', prompt:'Complete: My sister works as an interpreter for the EU. She ______ speak a lot of languages.', answers:['must'], explanation:'Es una deducción lógica fuerte, por eso usamos must.'})}
+    ];
+
+    const bodyTemplates = [
+      {difficulty:'easy', type:'multiple', build:()=>({topic:'body', label:'Partes del cuerpo', prompt:'The part of the body you use to hear is the ______.', options:['tongue','ears','chin','thumb'], answer:'ears', explanation:'Oímos con los ears.'})},
+      {difficulty:'easy', type:'input', build:()=>({topic:'body', label:'Partes del cuerpo', prompt:'The plural of tooth is ______.', answers:['teeth'], explanation:'La forma plural irregular de tooth es teeth.'})},
+      {difficulty:'medium', type:'multiple', build:()=>({topic:'body', label:'Partes del cuerpo', prompt:'Choose the correct translation of "shoulders".', options:['hombros','orejas','dedos','barbilla'], answer:'hombros', explanation:'Shoulders = hombros.'})},
+      {difficulty:'medium', type:'input', build:()=>({topic:'body', label:'Partes del cuerpo', prompt:'Complete in English: dedos del pie = ______.', answers:['toes'], explanation:'Toes = dedos del pie.'})},
+      {difficulty:'hard', type:'multiple', build:()=>({topic:'body', label:'Partes del cuerpo', prompt:'Which of these is NOT a part of the face?', options:['chin','lips','thumb','eyes'], answer:'thumb', explanation:'Thumb es el pulgar, no parte de la cara.'})},
+      {difficulty:'hard', type:'input', build:()=>({topic:'body', label:'Partes del cuerpo', prompt:'Complete in English: barbilla = ______.', answers:['chin'], explanation:'Chin = barbilla o mentón.'})}
+    ];
+
+    const actionTemplates = [
+      {difficulty:'easy', type:'multiple', build:()=>({topic:'actions', label:'Verbos de acción', prompt:'Don’t be frightened of the dog. He won’t ______.', options:['clap','bite','smile','point'], answer:'bite', explanation:'El verbo correcto con un perro en ese contexto es bite.'})},
+      {difficulty:'easy', type:'input', build:()=>({topic:'actions', label:'Verbos de acción', prompt:'The audience ______ when I finished singing.', answers:['clapped'], explanation:'La audiencia aplaudió: clapped.'})},
+      {difficulty:'medium', type:'multiple', build:()=>({topic:'actions', label:'Verbos de acción', prompt:'The stranger ______ at me for a long time, but he didn’t say anything.', options:['smiled','stared','kicked','whistled'], answer:'stared', explanation:'Stare = mirar fijamente.'})},
+      {difficulty:'medium', type:'input', build:()=>({topic:'actions', label:'Verbos de acción', prompt:'Can you ______ the sauce? I’m not sure if it needs more salt.', answers:['taste'], explanation:'Taste = probar.'})},
+      {difficulty:'hard', type:'multiple', build:()=>({topic:'actions', label:'Verbos de acción', prompt:'Choose the correct option: "The teacher suddenly ______ at me and said, What’s the answer?"', options:['pointed','bit','touched','nodded'], answer:'pointed', explanation:'Point at = señalar a alguien.'})},
+      {difficulty:'hard', type:'input', build:()=>({topic:'actions', label:'Verbos de acción', prompt:'Everybody ______ in agreement when I explained my idea.', answers:['nodded'], explanation:'Nod = asentir con la cabeza.'})}
+    ];
+
+    const pronunciationTemplates = [
+      {difficulty:'easy', type:'multiple', build:()=>({topic:'pronunciation', label:'Pronunciación', prompt:'Which word has the /aʊ/ sound?', options:['mouth','face','nose','teeth'], answer:'mouth', explanation:'Mouth lleva el sonido /aʊ/.'})},
+      {difficulty:'easy', type:'input', build:()=>({topic:'pronunciation', label:'Pronunciación', prompt:'Write one word from the /aɪ/ group: bite, eyes, or ______.', answers:['smile'], explanation:'El grupo /aɪ/ incluye bite, eyes y smile.'})},
+      {difficulty:'medium', type:'multiple', build:()=>({topic:'pronunciation', label:'Pronunciación', prompt:'Which group matches the /əʊ/ sound?', options:['nose, shoulders, throw, toes','hair, stare','face, taste','bite, smile'], answer:'nose, shoulders, throw, toes', explanation:'Ese es el grupo correcto del sonido /əʊ/.'})},
+      {difficulty:'medium', type:'input', build:()=>({topic:'pronunciation', label:'Pronunciación', prompt:'Complete the /eə/ group: hair, ______.', answers:['stare'], explanation:'El grupo /eə/ contiene hair y stare.'})},
+      {difficulty:'hard', type:'multiple', build:()=>({topic:'pronunciation', label:'Pronunciación', prompt:'Which word does NOT belong to the /eɪ/ sound group?', options:['face','taste','bite','same sound'], answer:'bite', explanation:'Bite tiene sonido /aɪ/, no /eɪ/.'})},
+      {difficulty:'hard', type:'input', build:()=>({topic:'pronunciation', label:'Pronunciación', prompt:'Complete the /eɪ/ group with one missing word: face, ______.', answers:['taste'], explanation:'Face y taste comparten el sonido /eɪ/.'})}
+    ];
+
+    const banks = {
+      passive: passiveTemplates,
+      cinema: cinemaTemplates,
+      modals: modalTemplates,
+      body: bodyTemplates,
+      actions: actionTemplates,
+      pronunciation: pronunciationTemplates
+    };
+
+    function normalize(text){
+      return text.toLowerCase().trim().replace(/\s+/g,' ').replace(/[.?!]/g,'');
+    }
+
+    function updateStats(){
+      document.getElementById('scoreNum').textContent = state.score;
+      document.getElementById('wrongNum').textContent = state.wrong;
+      document.getElementById('streakNum').textContent = state.streak;
+      document.getElementById('totalNum').textContent = state.total;
+    }
+
+    function addHistory(item){
+      state.history.unshift(item);
+      if(state.history.length > 18) state.history.pop();
+      const box = document.getElementById('history');
+      if(state.history.length === 0){
+        box.innerHTML = '<div class="empty">Todavía no has respondido preguntas.</div>';
+        return;
+      }
+      box.innerHTML = state.history.map(h => `
+        <div class="history-item">
+          <div><strong>${h.ok ? '✔ Correcta' : '✘ Incorrecta'}</strong> · <span class="small">${h.topic}</span></div>
+          <div class="small">${h.question}</div>
+          <div class="small">Tu respuesta: ${h.user}</div>
+          <div class="small">Correcta: ${h.correct}</div>
+        </div>
+      `).join('');
+    }
+
+    function pickTemplates(topic, difficulty, mode){
+      let selectedTopics = topic === 'all' ? Object.keys(banks) : [topic];
+      let arr = selectedTopics.flatMap(t => banks[t]);
+      if(difficulty !== 'mixed') arr = arr.filter(x => x.difficulty === difficulty);
+      if(mode !== 'mixed') arr = arr.filter(x => x.type === mode);
+      if(arr.length === 0){
+        arr = selectedTopics.flatMap(t => banks[t]);
+      }
+      return arr;
+    }
+
+    function randomItem(arr){
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function renderQuestion(q){
+      state.current = q;
+      document.getElementById('feedback').className = 'feedback';
+      document.getElementById('feedback').innerHTML = '';
+      document.getElementById('nextBtn').style.display = 'none';
+      document.getElementById('meta').innerHTML = `<span class="badge">${q.label}</span><span class="badge">${q.type === 'multiple' ? 'Opción múltiple' : 'Escribir respuesta'}</span><span class="badge">${q.difficultyLabel}</span>`;
+      document.getElementById('questionText').textContent = q.prompt;
+      const area = document.getElementById('answerArea');
+      const checkBtn = document.getElementById('checkBtn');
+      if(q.type === 'multiple'){
+        area.innerHTML = `<div class="options">${q.options.map(opt => `<button class="option" type="button">${opt}</button>`).join('')}</div>`;
+        checkBtn.style.display = 'none';
+        const buttons = area.querySelectorAll('.option');
+        buttons.forEach(btn => {
+          btn.addEventListener('click', ()=> handleMultiple(btn, buttons));
+        });
+      } else {
+        area.innerHTML = `<input id="textAnswer" type="text" placeholder="Escribe tu respuesta aquí" autocomplete="off" />`;
+        checkBtn.style.display = 'inline-block';
+        document.getElementById('textAnswer').addEventListener('keydown', (e)=>{
+          if(e.key === 'Enter') checkInput();
+        });
+      }
+    }
+
+    function generateQuestion(){
+      const topic = document.getElementById('topicSelect').value;
+      const difficulty = document.getElementById('difficultySelect').value;
+      const mode = document.getElementById('modeSelect').value;
+      const candidates = pickTemplates(topic, difficulty, mode);
+      const chosen = randomItem(candidates).build();
+      chosen.type = chosen.type || randomItem(candidates).type;
+      chosen.difficultyLabel = difficulty === 'mixed' ? 'Dificultad mixta' : (difficulty === 'easy' ? 'Fácil' : difficulty === 'medium' ? 'Media' : 'Difícil');
+      renderQuestion(chosen);
+    }
+
+    function finalize(ok, user, correct, explanation){
+      state.total++;
+      if(ok){
+        state.score++;
+        state.streak++;
+      } else {
+        state.wrong++;
+        state.streak = 0;
+      }
+      updateStats();
+      addHistory({ok, topic: state.current.label, question: state.current.prompt, user, correct});
+      const fb = document.getElementById('feedback');
+      fb.className = 'feedback show ' + (ok ? 'good' : 'bad');
+      fb.innerHTML = `${ok ? '<strong>¡Correcto!</strong>' : '<strong>Incorrecto.</strong>'} <div class="explanation">Respuesta correcta: <strong>${correct}</strong><br>${explanation}</div>`;
+      document.getElementById('nextBtn').style.display = 'inline-block';
+      document.getElementById('checkBtn').style.display = 'none';
+    }
+
+    function handleMultiple(btn, buttons){
+      if(!state.current) return;
+      buttons.forEach(b => b.disabled = true);
+      const user = btn.textContent;
+      const correct = state.current.answer;
+      buttons.forEach(b => {
+        if(b.textContent === correct) b.classList.add('correct');
+      });
+      const ok = user === correct;
+      if(!ok) btn.classList.add('wrong');
+      finalize(ok, user, correct, state.current.explanation);
+    }
+
+    function checkInput(){
+      if(!state.current) return;
+      const input = document.getElementById('textAnswer');
+      const user = normalize(input.value);
+      if(!user) return;
+      const answers = (state.current.answers || []).map(normalize);
+      const ok = answers.includes(user);
+      finalize(ok, input.value, state.current.answers[0], state.current.explanation);
+      input.disabled = true;
+    }
+
+    document.getElementById('startBtn').addEventListener('click', generateQuestion);
+    document.getElementById('nextBtn').addEventListener('click', generateQuestion);
+    document.getElementById('checkBtn').addEventListener('click', checkInput);
+    document.getElementById('resetBtn').addEventListener('click', ()=>{
+      state.score = 0; state.wrong = 0; state.streak = 0; state.total = 0; state.history = []; state.current = null;
+      updateStats();
+      addHistory(null || []);
+      document.getElementById('meta').innerHTML = '';
+      document.getElementById('questionText').innerHTML = 'Estadísticas reiniciadas. Pulsa <strong>Generar pregunta</strong> para continuar.';
+      document.getElementById('answerArea').innerHTML = '';
+      document.getElementById('feedback').className = 'feedback';
+      document.getElementById('feedback').innerHTML = '';
+      document.getElementById('checkBtn').style.display = 'none';
+      document.getElementById('nextBtn').style.display = 'none';
+    });
+
+    updateStats();
+  </script>
+</body>
+</html>
