@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modals of Deduction + Body Parts</title>
+  <style>
+    :root{
+      --bg:#0f172a;
+      --panel:#111827;
+      --card:#1f2937;
+      --soft:#334155;
+      --text:#f8fafc;
+      --muted:#cbd5e1;
+      --accent:#38bdf8;
+      --accent2:#22c55e;
+      --accent3:#f59e0b;
+      --danger:#ef4444;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#07111f,#0f172a 35%,#111827);
+      color:var(--text);
+      line-height:1.65;
+    }
+    header{
+      padding:48px 20px 28px;
+      text-align:center;
+      background:radial-gradient(circle at top, rgba(56,189,248,.25), transparent 35%);
+    }
+    header h1{margin:0;font-size:clamp(2rem,4vw,3rem)}
+    header p{max-width:950px;margin:14px auto 0;color:var(--muted);font-size:1.05rem}
+    nav{
+      position:sticky;top:0;z-index:20;
+      display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+      padding:14px;background:rgba(15,23,42,.92);backdrop-filter:blur(8px);
+      border-top:1px solid rgba(255,255,255,.08);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    nav a{
+      color:var(--text);text-decoration:none;padding:10px 14px;
+      background:var(--soft);border-radius:999px;font-size:.95rem;
+    }
+    nav a:hover{background:#475569}
+    main{max-width:1120px;margin:auto;padding:24px 18px 60px}
+    section{
+      background:rgba(17,24,39,.88);border:1px solid rgba(255,255,255,.08);
+      border-radius:22px;padding:24px;margin:20px 0;box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    h2{margin-top:0;font-size:1.8rem;color:var(--accent)}
+    h3{color:#7dd3fc;margin-top:24px}
+    h4{margin:0 0 8px;color:#e2e8f0}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px}
+    .formula{
+      background:#082f49;border-left:5px solid var(--accent);padding:14px 16px;border-radius:12px;
+      font-weight:bold;margin:14px 0;
+    }
+    .mini{background:#052e16;border-left:5px solid var(--accent2);padding:14px 16px;border-radius:12px}
+    .warning{background:#451a03;border-left:5px solid var(--accent3);padding:14px 16px;border-radius:12px}
+    table{width:100%;border-collapse:collapse;margin-top:12px;overflow:hidden;border-radius:14px}
+    th,td{padding:12px;border:1px solid rgba(255,255,255,.08);vertical-align:top}
+    th{background:#0f3b58;color:#e0f2fe}
+    tr:nth-child(even){background:rgba(255,255,255,.03)}
+    .tag{display:inline-block;background:#0f3b58;color:#dbeafe;border-radius:999px;padding:4px 10px;margin:4px 6px 0 0;font-size:.88rem}
+    .exercise{background:#0b1220;border:1px solid rgba(56,189,248,.2);border-radius:18px;padding:18px;margin-top:16px}
+    .q{margin-bottom:16px;padding:14px;background:#111827;border-radius:14px}
+    .q p{margin:0 0 10px}
+    select,input[type="text"]{width:100%;max-width:420px;padding:10px 12px;border-radius:10px;border:1px solid #64748b;background:#020617;color:white;font-size:1rem}
+    button{margin-top:14px;background:var(--accent);color:#082f49;border:none;padding:12px 18px;font-weight:bold;border-radius:12px;cursor:pointer}
+    button:hover{filter:brightness(1.06)}
+    .result{margin-top:16px;font-weight:bold}
+    .good{color:#4ade80}.bad{color:#f87171}
+    footer{text-align:center;color:var(--muted);padding:24px 16px 40px}
+    ul li{margin-bottom:8px}
+    code{background:#0b1220;padding:2px 8px;border-radius:8px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Modals of Deduction + Body Parts + Action Verbs</h1>
+    <p>Página de estudio con teoría detallada, explicación sencilla, vocabulario, pronunciación y preguntas prácticas sobre las últimas actividades: <strong>must, might, might not, can’t</strong>, partes del cuerpo, verbos de acción y grupos de sonidos.</p>
+  </header>
+
+  <nav>
+    <a href="#marco">Marco teórico</a>
+    <a href="#ninos">Explicación sencilla</a>
+    <a href="#vocab">Vocabulario</a>
+    <a href="#pronunciation">Pronunciación</a>
+    <a href="#preguntas">Preguntas</a>
+  </nav>
+
+  <main>
+    <section id="marco">
+      <h2>Marco teórico detallado</h2>
+      <p>En estas actividades aparecen cuatro temas principales: <strong>modals of deduction</strong>, <strong>partes del cuerpo</strong>, <strong>verbos de acciones cotidianas</strong> y <strong>pronunciación por grupos de sonidos</strong>. El tema gramatical central es el uso de los modales para hacer deducciones o suposiciones basadas en evidencia.</p>
+
+      <h3>1. ¿Qué son los modals of deduction?</h3>
+      <p>Los <strong>modals of deduction</strong> son verbos modales que usamos para decir lo que creemos, imaginamos o deducimos a partir de alguna señal, evidencia o contexto. No expresan una verdad absoluta, sino distintos grados de seguridad.</p>
+
+      <div class="formula">Estructura básica: <code>modal + base verb</code></div>
+      <p>Ejemplos:</p>
+      <ul>
+        <li><em>He must be cold.</em></li>
+        <li><em>She might have a new partner.</em></li>
+        <li><em>He can’t be a businessman.</em></li>
+      </ul>
+
+      <h3>2. Significado de cada modal</h3>
+      <div class="grid">
+        <div class="card">
+          <h4>Must</h4>
+          <p>Se usa cuando el hablante está casi seguro de que algo es verdad. No significa obligación en este caso, sino una deducción fuerte.</p>
+          <p><strong>Ejemplo:</strong> <em>He must be a tourist.</em><br>Hay señales claras, como una cámara y una guía, así que la conclusión parece muy probable.</p>
+        </div>
+        <div class="card">
+          <h4>Might / May</h4>
+          <p>Se usan cuando algo es posible, pero no seguro. Son deducciones débiles o medias.</p>
+          <p><strong>Ejemplo:</strong> <em>He might be American.</em><br>Quizá lo es, pero no estamos completamente seguros.</p>
+        </div>
+        <div class="card">
+          <h4>Might not / May not</h4>
+          <p>Expresan la posibilidad de que algo no sea verdad.</p>
+          <p><strong>Ejemplo:</strong> <em>She might not like it.</em><br>Existe la posibilidad de que no le guste.</p>
+        </div>
+        <div class="card">
+          <h4>Can’t</h4>
+          <p>Se usa cuando creemos que algo es imposible o muy improbable.</p>
+          <p><strong>Ejemplo:</strong> <em>He can’t be a university student.</em><br>La evidencia nos hace pensar que eso no puede ser cierto.</p>
+        </div>
+      </div>
+
+      <h3>3. Grados de seguridad</h3>
+      <table>
+        <tr>
+          <th>Modal</th>
+          <th>Idea principal</th>
+          <th>Grado de seguridad</th>
+        </tr>
+        <tr>
+          <td>must</td>
+          <td>Estoy casi seguro</td>
+          <td>muy alto</td>
+        </tr>
+        <tr>
+          <td>might / may</td>
+          <td>Es posible</td>
+          <td>medio</td>
+        </tr>
+        <tr>
+          <td>might not / may not</td>
+          <td>Es posible que no</td>
+          <td>medio</td>
+        </tr>
+        <tr>
+          <td>can’t</td>
+          <td>No puede ser</td>
+          <td>muy alto en negativo</td>
+        </tr>
+      </table>
+
+      <h3>4. Estructuras más comunes</h3>
+      <table>
+        <tr>
+          <th>Estructura</th>
+          <th>Uso</th>
+          <th>Ejemplo</th>
+        </tr>
+        <tr>
+          <td>modal + be + adjective</td>
+          <td>para describir estados</td>
+          <td>He must be cold.</td>
+        </tr>
+        <tr>
+          <td>modal + be + noun</td>
+          <td>para identificar personas o cosas</td>
+          <td>He can’t be a businessman.</td>
+        </tr>
+        <tr>
+          <td>modal + base verb</td>
+          <td>para acciones o situaciones generales</td>
+          <td>She must speak a lot of languages.</td>
+        </tr>
+        <tr>
+          <td>modal + be + verb-ing</td>
+          <td>para acciones en progreso</td>
+          <td>He might be going to the gym.</td>
+        </tr>
+        <tr>
+          <td>modal + have + noun</td>
+          <td>para posesión o situación</td>
+          <td>He may not have a job.</td>
+        </tr>
+      </table>
+
+      <h3>5. Cómo se forman las negativas y qué errores evitar</h3>
+      <div class="warning">
+        <p><strong>Ojo:</strong> después de <em>must, might, may, can’t</em> se usa el verbo en forma base. No lleva <em>to</em>, no lleva <em>-s</em>, y no lleva otro auxiliar.</p>
+      </div>
+      <ul>
+        <li>Correcto: <em>He must be tired.</em></li>
+        <li>Incorrecto: <em>He must to be tired.</em></li>
+        <li>Correcto: <em>She might like it.</em></li>
+        <li>Incorrecto: <em>She might likes it.</em></li>
+      </ul>
+
+      <h3>6. Vocabulario: partes del cuerpo</h3>
+      <p>Las actividades muestran vocabulario básico del cuerpo humano, útil para descripciones físicas y reconocimiento visual.</p>
+      <div class="grid">
+        <div class="card"><strong>shoulders</strong><br>hombros</div>
+        <div class="card"><strong>eyes</strong><br>ojos</div>
+        <div class="card"><strong>fingers</strong><br>dedos de la mano</div>
+        <div class="card"><strong>tongue</strong><br>lengua</div>
+        <div class="card"><strong>ears</strong><br>orejas</div>
+        <div class="card"><strong>legs</strong><br>piernas</div>
+        <div class="card"><strong>lips</strong><br>labios</div>
+        <div class="card"><strong>chin</strong><br>mentón / barbilla</div>
+        <div class="card"><strong>thumb</strong><br>pulgar</div>
+        <div class="card"><strong>neck</strong><br>cuello</div>
+        <div class="card"><strong>hands</strong><br>manos</div>
+        <div class="card"><strong>arms</strong><br>brazos</div>
+        <div class="card"><strong>feet</strong><br>pies</div>
+        <div class="card"><strong>back</strong><br>espalda</div>
+        <div class="card"><strong>face</strong><br>cara</div>
+        <div class="card"><strong>stomach</strong><br>barriga / estómago</div>
+        <div class="card"><strong>teeth</strong><br>dientes</div>
+        <div class="card"><strong>toes</strong><br>dedos del pie</div>
+        <div class="card"><strong>mouth</strong><br>boca</div>
+        <div class="card"><strong>nose</strong><br>nariz</div>
+        <div class="card"><strong>hair</strong><br>cabello</div>
+      </div>
+
+      <h3>7. Verbos de acción de la unidad</h3>
+      <p>Estos verbos aparecen en las actividades de completar oraciones. Son verbos comunes que ayudan a describir acciones, reacciones o sentidos.</p>
+      <table>
+        <tr>
+          <th>Verbo</th>
+          <th>Significado</th>
+          <th>Ejemplo</th>
+        </tr>
+        <tr><td>bite</td><td>morder</td><td>Don’t worry. The dog won’t bite.</td></tr>
+        <tr><td>clap</td><td>aplaudir</td><td>The audience clapped loudly.</td></tr>
+        <tr><td>kick</td><td>patear</td><td>Jason kicked the ball.</td></tr>
+        <tr><td>nod</td><td>asentir con la cabeza</td><td>Everybody nodded in agreement.</td></tr>
+        <tr><td>point</td><td>señalar</td><td>The teacher pointed at me.</td></tr>
+        <tr><td>smell</td><td>oler</td><td>Something smells delicious.</td></tr>
+        <tr><td>smile</td><td>sonreír</td><td>He never smiles.</td></tr>
+        <tr><td>stare</td><td>mirar fijamente</td><td>The stranger stared at me.</td></tr>
+        <tr><td>taste</td><td>probar / saber</td><td>Can you taste the sauce?</td></tr>
+        <tr><td>touch</td><td>tocar</td><td>Don’t touch the oven door.</td></tr>
+        <tr><td>whistle</td><td>silbar</td><td>My dog comes when I whistle.</td></tr>
+      </table>
+    </section>
+
+    <section id="ninos">
+      <h2>Explicación sencilla para un niño de primaria</h2>
+      <div class="mini">
+        <p>Cuando vemos una pista y queremos adivinar algo, usamos palabras especiales en inglés.</p>
+      </div>
+      <ul>
+        <li><strong>must</strong> = estoy casi seguro</li>
+        <li><strong>might</strong> = tal vez</li>
+        <li><strong>might not</strong> = tal vez no</li>
+        <li><strong>can’t</strong> = no puede ser</li>
+      </ul>
+      <p>Ejemplos fáciles:</p>
+      <ul>
+        <li>Si alguien tiene cámara y mapa: <em>He must be a tourist.</em></li>
+        <li>Si alguien lleva bolsa de deporte: <em>He might be going to the gym.</em></li>
+        <li>Si hace mucho frío y no lleva abrigo: <em>He must be cold.</em></li>
+        <li>Si no lleva terno: <em>He can’t be a businessman.</em></li>
+      </ul>
+      <p>También aprendemos palabras del cuerpo, como <em>eyes</em>, <em>ears</em>, <em>mouth</em>, <em>hands</em> y <em>legs</em>, y verbos como <em>smile</em>, <em>clap</em>, <em>kick</em> y <em>touch</em>.</p>
+      <div class="formula">Truco fácil: <br><code>must = casi seguro</code><br><code>might = quizá</code><br><code>can’t = imposible</code></div>
+    </section>
+
+    <section id="vocab">
+      <h2>Vocabulario de la unidad</h2>
+
+      <h3>Modals of deduction</h3>
+      <div>
+        <span class="tag">must = debe / seguro que</span>
+        <span class="tag">might = podría / tal vez</span>
+        <span class="tag">might not = tal vez no</span>
+        <span class="tag">may not = quizá no</span>
+        <span class="tag">can’t = no puede ser</span>
+      </div>
+
+      <h3>Body parts</h3>
+      <table>
+        <tr><th>Inglés</th><th>Español</th></tr>
+        <tr><td>shoulders</td><td>hombros</td></tr>
+        <tr><td>eyes</td><td>ojos</td></tr>
+        <tr><td>tongue</td><td>lengua</td></tr>
+        <tr><td>ears</td><td>orejas</td></tr>
+        <tr><td>legs</td><td>piernas</td></tr>
+        <tr><td>lips</td><td>labios</td></tr>
+        <tr><td>fingers</td><td>dedos de la mano</td></tr>
+        <tr><td>chin</td><td>barbilla</td></tr>
+        <tr><td>thumb</td><td>pulgar</td></tr>
+        <tr><td>neck</td><td>cuello</td></tr>
+        <tr><td>hands</td><td>manos</td></tr>
+        <tr><td>arms</td><td>brazos</td></tr>
+        <tr><td>feet</td><td>pies</td></tr>
+        <tr><td>back</td><td>espalda</td></tr>
+        <tr><td>face</td><td>cara</td></tr>
+        <tr><td>stomach</td><td>estómago / barriga</td></tr>
+        <tr><td>teeth</td><td>dientes</td></tr>
+        <tr><td>toes</td><td>dedos del pie</td></tr>
+        <tr><td>mouth</td><td>boca</td></tr>
+        <tr><td>nose</td><td>nariz</td></tr>
+        <tr><td>hair</td><td>cabello</td></tr>
+      </table>
+
+      <h3>Action verbs</h3>
+      <div>
+        <span class="tag">bite = morder</span>
+        <span class="tag">clap = aplaudir</span>
+        <span class="tag">kick = patear</span>
+        <span class="tag">nod = asentir</span>
+        <span class="tag">point = señalar</span>
+        <span class="tag">smell = oler</span>
+        <span class="tag">smile = sonreír</span>
+        <span class="tag">stare = mirar fijamente</span>
+        <span class="tag">taste = probar</span>
+        <span class="tag">touch = tocar</span>
+        <span class="tag">whistle = silbar</span>
+      </div>
+    </section>
+
+    <section id="pronunciation">
+      <h2>Pronunciación por grupos de sonidos</h2>
+      <p>En las últimas actividades también se agrupan palabras por sonidos parecidos. Eso ayuda a reconocer patrones de pronunciación.</p>
+      <table>
+        <tr>
+          <th>Sonido</th>
+          <th>Palabras</th>
+        </tr>
+        <tr>
+          <td>/aɪ/</td>
+          <td>bite, eyes, smile</td>
+        </tr>
+        <tr>
+          <td>/eɪ/</td>
+          <td>face, taste</td>
+        </tr>
+        <tr>
+          <td>/əʊ/</td>
+          <td>nose, shoulders, throw, toes</td>
+        </tr>
+        <tr>
+          <td>/aʊ/</td>
+          <td>mouth</td>
+        </tr>
+        <tr>
+          <td>/eə/</td>
+          <td>hair, stare</td>
+        </tr>
+      </table>
+      <p>Aprender estas familias de sonidos ayuda a pronunciar mejor y recordar más rápido el vocabulario.</p>
+    </section>
+
+    <section id="preguntas">
+      <h2>Sección de preguntas</h2>
+      <p>Aquí tienes ejercicios con gramática, vocabulario y pronunciación de esta segunda página.</p>
+
+      <div class="exercise">
+        <h3>Parte A: Escoge la opción correcta</h3>
+
+        <div class="q">
+          <p>1. He’s carrying a camera and a guide book. He ______ be a tourist.</p>
+          <select id="q1">
+            <option value="">Selecciona</option>
+            <option value="a">must</option>
+            <option value="b">can’t</option>
+            <option value="c">might not</option>
+          </select>
+        </div>
+
+        <div class="q">
+          <p>2. It’s freezing and he isn’t wearing a jumper. He ______ be cold.</p>
+          <select id="q2">
+            <option value="">Selecciona</option>
+            <option value="a">must</option>
+            <option value="b">might not</option>
+            <option value="c">can’t</option>
+          </select>
+        </div>
+
+        <div class="q">
+          <p>3. The part of the body you use to hear is the ______.</p>
+          <select id="q3">
+            <option value="">Selecciona</option>
+            <option value="a">tongue</option>
+            <option value="b">ears</option>
+            <option value="c">chin</option>
+          </select>
+        </div>
+
+        <div class="q">
+          <p>4. The audience ______ when I finished singing.</p>
+          <select id="q4">
+            <option value="">Selecciona</option>
+            <option value="a">pointed</option>
+            <option value="b">clapped</option>
+            <option value="c">bit</option>
+          </select>
+        </div>
+
+        <div class="q">
+          <p>5. Which word has the /aʊ/ sound?</p>
+          <select id="q5">
+            <option value="">Selecciona</option>
+            <option value="a">mouth</option>
+            <option value="b">face</option>
+            <option value="c">nose</option>
+          </select>
+        </div>
+
+        <button onclick="checkA()">Revisar Parte A</button>
+        <div id="resultA" class="result"></div>
+      </div>
+
+      <div class="exercise">
+        <h3>Parte B: Escribe la forma correcta</h3>
+
+        <div class="q">
+          <p>6. He isn’t wearing a suit. He ______ be a businessman.</p>
+          <input id="q6" type="text" placeholder="Escribe tu respuesta" />
+        </div>
+
+        <div class="q">
+          <p>7. The dog won’t ______.</p>
+          <input id="q7" type="text" placeholder="Escribe tu respuesta" />
+        </div>
+
+        <div class="q">
+          <p>8. The plural of <em>tooth</em> is ______.</p>
+          <input id="q8" type="text" placeholder="Escribe tu respuesta" />
+        </div>
+
+        <div class="q">
+          <p>9. A person may look at you for a long time without speaking. The verb is ______.</p>
+          <input id="q9" type="text" placeholder="Escribe tu respuesta" />
+        </div>
+
+        <div class="q">
+          <p>10. Complete: She works as an interpreter for the EU. She ______ speak a lot of languages.</p>
+          <input id="q10" type="text" placeholder="Escribe tu respuesta" />
+        </div>
+
+        <button onclick="checkB()">Revisar Parte B</button>
+        <div id="resultB" class="result"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Página de repaso de inglés - Modals of Deduction, Body Parts, Action Verbs & Pronunciation
+  </footer>
+
+  <script>
+    function normalize(text){
+      return text.toLowerCase().trim().replace(/\s+/g,' ').replace(/[.]/g,'');
+    }
+
+    function checkA(){
+      let score = 0;
+      if(document.getElementById('q1').value === 'a') score++;
+      if(document.getElementById('q2').value === 'a') score++;
+      if(document.getElementById('q3').value === 'b') score++;
+      if(document.getElementById('q4').value === 'b') score++;
+      if(document.getElementById('q5').value === 'a') score++;
+      const r = document.getElementById('resultA');
+      r.innerHTML = `Obtuviste <strong>${score}/5</strong> en la Parte A.`;
+      r.className = 'result ' + (score >= 4 ? 'good' : 'bad');
+    }
+
+    function checkB(){
+      let score = 0;
+      const answers = {
+        q6:['can’t','cant'],
+        q7:['bite'],
+        q8:['teeth'],
+        q9:['stare'],
+        q10:['must']
+      };
+      for(const id in answers){
+        const user = normalize(document.getElementById(id).value);
+        if(answers[id].includes(user)) score++;
+      }
+      const r = document.getElementById('resultB');
+      r.innerHTML = `Obtuviste <strong>${score}/5</strong> en la Parte B.`;
+      r.className = 'result ' + (score >= 4 ? 'good' : 'bad');
+    }
+  </script>
+</body>
+</html>
