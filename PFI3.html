@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Boss - Repaso Intermedio 3</title>
+  <style>
+    :root{
+      --bg:#070707;
+      --bg2:#120909;
+      --panel:#141414;
+      --panel2:#1b1010;
+      --line:#332020;
+      --text:#f5eaea;
+      --muted:#c8a9a9;
+      --red:#ff3b3b;
+      --red2:#b31217;
+      --red3:#7f1010;
+      --orange:#ff8a00;
+      --gold:#ffd166;
+      --good:#33d17a;
+      --bad:#ff5d5d;
+      --shadow:0 14px 40px rgba(0,0,0,.45);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top, rgba(255,60,60,.15), transparent 22%),
+        radial-gradient(circle at 20% 30%, rgba(255,120,0,.08), transparent 18%),
+        linear-gradient(180deg, #050505, #0b0606 40%, #120909 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    .embers{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:0;
+    }
+    .ember{
+      position:absolute;
+      bottom:-20px;
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:radial-gradient(circle, #ffd166 0%, #ff6b35 60%, transparent 70%);
+      opacity:.7;
+      animation:rise linear infinite;
+      filter:blur(.2px);
+    }
+    @keyframes rise{
+      0%{transform:translateY(0) scale(1); opacity:.0}
+      10%{opacity:.8}
+      100%{transform:translateY(-110vh) translateX(30px) scale(1.8); opacity:0}
+    }
+
+    header{
+      position:relative;
+      z-index:2;
+      padding:28px 20px 16px;
+      text-align:center;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+    }
+    .title{
+      font-size:clamp(2rem, 5vw, 3.5rem);
+      margin:0;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      color:#fff1f1;
+      text-shadow:0 0 10px rgba(255,60,60,.35), 0 0 30px rgba(255,60,60,.18);
+    }
+    .subtitle{
+      max-width:960px;
+      margin:10px auto 0;
+      color:var(--muted);
+      font-size:1rem;
+    }
+
+    .wrap{
+      position:relative;
+      z-index:2;
+      max-width:1200px;
+      margin:0 auto;
+      padding:22px 18px 40px;
+    }
+
+    .top-actions{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .btn{
+      border:none;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:12px 18px;
+      border-radius:14px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s ease;
+      box-shadow:var(--shadow);
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-abandon{
+      background:linear-gradient(135deg, #2a1515, #4b1717);
+      color:#ffd7d7;
+      border:1px solid #6d2323;
+    }
+    .btn-home{
+      background:linear-gradient(135deg, #ff5d5d, #c81f1f);
+      color:white;
+      border:1px solid #ff8686;
+    }
+    .hidden{display:none !important;}
+
+    .arena{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:18px;
+      align-items:stretch;
+    }
+
+    .panel{
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(4px);
+    }
+
+    .battlefield{
+      position:relative;
+      min-height:720px;
+      background:
+        radial-gradient(circle at 50% 10%, rgba(255,80,80,.18), transparent 24%),
+        linear-gradient(180deg, #180909 0%, #120909 50%, #080606 100%);
+      border:1px solid rgba(255,90,90,.1);
+    }
+
+    .battle-inner{
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      height:100%;
+    }
+
+    .status-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:20px;
+      padding:14px;
+    }
+
+    .status-head{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      margin-bottom:8px;
+      flex-wrap:wrap;
+    }
+
+    .label{
+      font-size:.9rem;
+      color:#ffd7d7;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      font-weight:700;
+    }
+
+    .big-name{
+      font-size:1.2rem;
+      font-weight:800;
+      color:#fff;
+    }
+
+    .hp-wrap{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .hp-bar{
+      position:relative;
+      flex:1;
+      height:18px;
+      border-radius:999px;
+      background:#2a1a1a;
+      overflow:hidden;
+      border:1px solid #5b2828;
+    }
+
+    .hp-fill{
+      height:100%;
+      width:100%;
+      background:linear-gradient(90deg, #ff8a00, #ff3b3b);
+      transition:width .35s ease;
+      box-shadow:0 0 14px rgba(255,70,70,.35);
+    }
+
+    .hp-fill.player{
+      background:linear-gradient(90deg, #ffb347, #ffd166);
+      box-shadow:0 0 14px rgba(255,190,80,.25);
+    }
+
+    .hearts{
+      font-size:1.2rem;
+      letter-spacing:2px;
+      min-width:88px;
+      text-align:right;
+    }
+
+    .scene{
+      flex:1;
+      position:relative;
+      border-radius:24px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.05);
+      background:
+        radial-gradient(circle at 50% 12%, rgba(255,74,74,.18), transparent 20%),
+        linear-gradient(180deg, #1c0a0a 0%, #140909 45%, #090707 100%);
+      min-height:380px;
+    }
+
+    .lava{
+      position:absolute;
+      bottom:0;
+      left:0;
+      width:100%;
+      height:80px;
+      background:
+        radial-gradient(circle at 20% 40%, rgba(255,200,0,.55), transparent 24%),
+        radial-gradient(circle at 60% 50%, rgba(255,120,0,.5), transparent 22%),
+        radial-gradient(circle at 80% 30%, rgba(255,80,0,.5), transparent 20%),
+        linear-gradient(180deg, #3a0808, #6e120d 45%, #c81f1f 100%);
+      box-shadow:0 -10px 35px rgba(255,60,0,.16);
+    }
+
+    .boss-zone{
+      position:absolute;
+      right:38px;
+      top:36px;
+      width:320px;
+      height:240px;
+      animation:floatBoss 3.6s ease-in-out infinite;
+      transform-origin:center;
+    }
+    @keyframes floatBoss{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-10px)}
+    }
+
+    .dragon{
+      position:relative;
+      width:100%;
+      height:100%;
+      filter:drop-shadow(0 16px 24px rgba(0,0,0,.45));
+    }
+    .dragon .body{
+      position:absolute;
+      right:35px;
+      top:82px;
+      width:160px;
+      height:90px;
+      background:linear-gradient(135deg, #761414, #250404);
+      border:3px solid #b31d1d;
+      border-radius:55% 45% 50% 50%;
+      transform:rotate(-6deg);
+    }
+    .dragon .neck{
+      position:absolute;
+      right:155px;
+      top:78px;
+      width:74px;
+      height:24px;
+      background:linear-gradient(135deg, #7c1515, #250404);
+      border:3px solid #b31d1d;
+      border-radius:20px;
+      transform:rotate(-10deg);
+    }
+    .dragon .head{
+      position:absolute;
+      right:205px;
+      top:48px;
+      width:78px;
+      height:58px;
+      background:linear-gradient(135deg, #8a1717, #2b0606);
+      border:3px solid #d52d2d;
+      border-radius:50% 45% 40% 50%;
+      transform:rotate(-5deg);
+    }
+    .dragon .jaw{
+      position:absolute;
+      right:196px;
+      top:86px;
+      width:62px;
+      height:24px;
+      background:linear-gradient(135deg, #651111, #2d0808);
+      border:3px solid #b31d1d;
+      border-radius:14px;
+      transform:rotate(6deg);
+    }
+    .dragon .eye{
+      position:absolute;
+      right:236px;
+      top:70px;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:#ffd166;
+      box-shadow:0 0 12px rgba(255,209,102,.9);
+    }
+    .dragon .horn1,
+    .dragon .horn2{
+      position:absolute;
+      width:16px;
+      height:38px;
+      background:linear-gradient(180deg, #f3d4a5, #7a5b3e);
+      border-radius:10px 10px 2px 2px;
+      transform-origin:bottom center;
+    }
+    .dragon .horn1{ right:226px; top:22px; transform:rotate(-12deg);}
+    .dragon .horn2{ right:205px; top:25px; transform:rotate(10deg);}
+
+    .dragon .wing-left,
+    .dragon .wing-right{
+      position:absolute;
+      width:116px;
+      height:100px;
+      background:linear-gradient(135deg, #3b0808, #8e1919);
+      border:3px solid #c72929;
+      clip-path:polygon(0 100%, 18% 30%, 38% 72%, 55% 16%, 74% 72%, 92% 4%, 100% 100%);
+      opacity:.96;
+    }
+    .dragon .wing-left{
+      right:130px;
+      top:10px;
+      transform:rotate(-14deg);
+      animation:flap1 1.6s ease-in-out infinite;
+    }
+    .dragon .wing-right{
+      right:42px;
+      top:2px;
+      transform:scaleX(-1) rotate(-8deg);
+      animation:flap2 1.6s ease-in-out infinite;
+    }
+    @keyframes flap1{
+      0%,100%{transform:rotate(-14deg)}
+      50%{transform:rotate(-4deg)}
+    }
+    @keyframes flap2{
+      0%,100%{transform:scaleX(-1) rotate(-8deg)}
+      50%{transform:scaleX(-1) rotate(2deg)}
+    }
+
+    .dragon .leg1,.dragon .leg2{
+      position:absolute;
+      width:18px;
+      height:52px;
+      background:linear-gradient(180deg,#7c1515,#280505);
+      border:3px solid #b31d1d;
+      border-radius:12px;
+      top:150px;
+    }
+    .dragon .leg1{right:85px}
+    .dragon .leg2{right:125px}
+
+    .dragon .tail{
+      position:absolute;
+      right:-2px;
+      top:102px;
+      width:120px;
+      height:18px;
+      background:linear-gradient(90deg,#280505,#8e1919);
+      border:3px solid #b31d1d;
+      border-radius:20px;
+      transform:rotate(18deg);
+    }
+    .dragon .tail::after{
+      content:"";
+      position:absolute;
+      right:-16px;
+      top:-9px;
+      width:0;
+      height:0;
+      border-left:20px solid #d92f2f;
+      border-top:12px solid transparent;
+      border-bottom:12px solid transparent;
+    }
+
+    .flame{
+      position:absolute;
+      right:235px;
+      top:100px;
+      width:0;
+      height:0;
+      border-top:16px solid transparent;
+      border-bottom:16px solid transparent;
+      border-right:58px solid rgba(255,120,0,.92);
+      filter:drop-shadow(0 0 12px rgba(255,120,0,.6));
+      animation:breathe 1.9s ease-in-out infinite;
+      transform-origin:right center;
+    }
+    .flame::after{
+      content:"";
+      position:absolute;
+      top:-10px;
+      left:16px;
+      width:0;
+      height:0;
+      border-top:10px solid transparent;
+      border-bottom:10px solid transparent;
+      border-right:34px solid rgba(255,215,102,.95);
+    }
+    @keyframes breathe{
+      0%,100%{transform:scaleX(.72); opacity:.78}
+      50%{transform:scaleX(1.08); opacity:1}
+    }
+
+    .hero-zone{
+      position:absolute;
+      left:34px;
+      bottom:84px;
+      width:140px;
+      height:220px;
+    }
+    .hero{
+      position:relative;
+      width:100%;
+      height:100%;
+      animation:heroIdle 2.2s ease-in-out infinite;
+    }
+    @keyframes heroIdle{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-4px)}
+    }
+    .hero .head{
+      position:absolute;
+      left:52px;
+      top:18px;
+      width:34px;
+      height:34px;
+      background:#f0d4b5;
+      border-radius:50%;
+      border:2px solid #c09574;
+    }
+    .hero .body{
+      position:absolute;
+      left:44px;
+      top:48px;
+      width:50px;
+      height:72px;
+      background:linear-gradient(180deg,#2b2b2b,#0f0f0f);
+      border:2px solid #5f5f5f;
+      border-radius:16px 16px 10px 10px;
+    }
+    .hero .cape{
+      position:absolute;
+      left:32px;
+      top:48px;
+      width:68px;
+      height:88px;
+      background:linear-gradient(180deg,#6e0f0f,#230505);
+      clip-path:polygon(18% 0, 82% 0, 100% 100%, 0 100%);
+      opacity:.95;
+      z-index:-1;
+    }
+    .hero .arm{
+      position:absolute;
+      top:60px;
+      width:14px;
+      height:54px;
+      background:#1a1a1a;
+      border:2px solid #555;
+      border-radius:10px;
+    }
+    .hero .arm.left{left:26px; transform:rotate(18deg)}
+    .hero .arm.right{left:96px; transform:rotate(-18deg)}
+    .hero .leg{
+      position:absolute;
+      top:114px;
+      width:16px;
+      height:66px;
+      background:#0f0f0f;
+      border:2px solid #555;
+      border-radius:12px;
+    }
+    .hero .leg.left{left:48px}
+    .hero .leg.right{left:76px}
+    .hero .sword{
+      position:absolute;
+      left:98px;
+      top:38px;
+      width:12px;
+      height:110px;
+      background:linear-gradient(180deg,#d8d8d8,#8b8b8b);
+      border-radius:10px;
+      transform:rotate(20deg);
+      box-shadow:0 0 12px rgba(255,255,255,.12);
+    }
+    .hero .sword::before{
+      content:"";
+      position:absolute;
+      top:90px;
+      left:-10px;
+      width:32px;
+      height:8px;
+      background:#c81f1f;
+      border-radius:8px;
+    }
+
+    .damage-pop{
+      position:absolute;
+      font-size:2rem;
+      font-weight:900;
+      text-shadow:0 0 12px rgba(0,0,0,.6);
+      opacity:0;
+      pointer-events:none;
+    }
+    .damage-pop.show{
+      animation:damageFloat .8s ease forwards;
+    }
+    @keyframes damageFloat{
+      0%{opacity:0; transform:translateY(10px) scale(.8)}
+      20%{opacity:1}
+      100%{opacity:0; transform:translateY(-38px) scale(1.15)}
+    }
+    .damage-boss{color:#ff7b7b; right:180px; top:140px;}
+    .damage-player{color:#ffd166; left:80px; top:180px;}
+
+    .log{
+      min-height:84px;
+      border-radius:18px;
+      padding:14px;
+      background:linear-gradient(180deg,#120c0c,#1a1010);
+      border:1px solid #402525;
+      color:#ffdede;
+      font-size:1rem;
+    }
+
+    .question-panel{
+      background:linear-gradient(180deg, #120c0c, #161010);
+      border:1px solid rgba(255,255,255,.07);
+    }
+    .question-inner{
+      padding:18px;
+    }
+    .boss-mini{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:16px;
+      padding:12px;
+      border-radius:16px;
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border:1px solid rgba(255,255,255,.06);
+    }
+    .boss-mini .icon{
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      font-size:1.5rem;
+      border-radius:12px;
+      background:linear-gradient(135deg,#4b1111,#8e1919);
+      box-shadow:0 0 18px rgba(255,60,60,.15);
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-bottom:16px;
+    }
+    .meta .box{
+      background:#1b1212;
+      border:1px solid #402525;
+      border-radius:16px;
+      padding:12px;
+      text-align:center;
+    }
+    .meta .num{
+      font-size:1.4rem;
+      font-weight:900;
+      color:#fff;
+    }
+    .meta .txt{
+      color:#d8b5b5;
+      font-size:.88rem;
+    }
+
+    .question-card{
+      background:linear-gradient(180deg, #1a1111, #130d0d);
+      border:1px solid #432626;
+      border-radius:22px;
+      padding:18px;
+      margin-bottom:14px;
+    }
+    .topic-pill{
+      display:inline-block;
+      font-size:.8rem;
+      font-weight:800;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+      color:#ffd2d2;
+      background:linear-gradient(135deg,#4b1111,#7d1717);
+      border:1px solid #a22727;
+      padding:6px 10px;
+      border-radius:999px;
+      margin-bottom:10px;
+    }
+    .question-text{
+      font-size:1.1rem;
+      font-weight:700;
+      margin:0 0 14px;
+      color:#fff2f2;
+    }
+
+    .answers{
+      display:grid;
+      gap:10px;
+    }
+    .answer-btn{
+      width:100%;
+      text-align:left;
+      background:linear-gradient(180deg,#241515,#1a1010);
+      color:#ffe6e6;
+      border:1px solid #5b2b2b;
+      border-radius:16px;
+      padding:13px 14px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .answer-btn:hover{
+      transform:translateY(-1px);
+      border-color:#a13232;
+      background:linear-gradient(180deg,#301919,#211111);
+    }
+    .answer-btn.correct{
+      background:linear-gradient(135deg,#154c2a,#18713f);
+      border-color:#2fb264;
+      color:#effff4;
+    }
+    .answer-btn.wrong{
+      background:linear-gradient(135deg,#5b1414,#9f1c1c);
+      border-color:#ff5d5d;
+      color:#fff1f1;
+    }
+
+    .next-wrap{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:14px;
+      flex-wrap:wrap;
+    }
+
+    .btn-main{
+      background:linear-gradient(135deg,#ff4e4e,#b31217);
+      color:white;
+      border:1px solid #ff8d8d;
+    }
+    .btn-ghost{
+      background:linear-gradient(135deg,#261818,#160d0d);
+      color:#ffdede;
+      border:1px solid #5b2b2b;
+    }
+
+    .victory-screen,.defeat-screen{
+      display:none;
+      text-align:center;
+      padding:28px 18px 8px;
+      animation:fadeIn .5s ease;
+    }
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(8px)}
+      to{opacity:1; transform:translateY(0)}
+    }
+    .final-title{
+      font-size:2rem;
+      margin:0 0 8px;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+    .victory-screen .final-title{color:#ffd166}
+    .defeat-screen .final-title{color:#ff8080}
+    .final-text{
+      color:#e6caca;
+      max-width:700px;
+      margin:0 auto 18px;
+    }
+
+    @media (max-width: 980px){
+      .arena{grid-template-columns:1fr}
+      .battlefield{min-height:620px}
+      .boss-zone{right:10px; width:270px; transform:scale(.9)}
+    }
+
+    @media (max-width: 640px){
+      .meta{grid-template-columns:1fr}
+      .boss-zone{
+        right:0;
+        left:auto;
+        top:42px;
+        width:230px;
+        transform:scale(.8);
+      }
+      .hero-zone{left:10px; transform:scale(.9)}
+      .scene{min-height:340px}
+      .title{font-size:2rem}
+    }
+  </style>
+</head>
+<body>
+  <div class="embers" id="embers"></div>
+
+  <header>
+    <h1 class="title">Final Boss</h1>
+    <p class="subtitle">
+      Repaso total de 6A, 6B, 7A y 7B. Responde bien para derrotar al dragón.
+      Si fallas demasiado... la misión termina.
+    </p>
+  </header>
+
+  <div class="wrap">
+    <div class="top-actions">
+      <a class="btn btn-abandon" href="7B.html">⚠ Abandonar misión</a>
+      <a class="btn btn-home hidden" id="homeBtn" href="index.html">🏆 Volver al inicio</a>
+    </div>
+
+    <div class="arena">
+      <section class="panel battlefield">
+        <div class="battle-inner">
+          <div class="status-card">
+            <div class="status-head">
+              <div>
+                <div class="label">Jefe final</div>
+                <div class="big-name">Dragón del Intermedio III</div>
+              </div>
+              <div id="bossHpText">100 / 100 HP</div>
+            </div>
+            <div class="hp-wrap">
+              <div class="hp-bar"><div class="hp-fill" id="bossHpFill"></div></div>
+            </div>
+          </div>
+
+          <div class="status-card">
+            <div class="status-head">
+              <div>
+                <div class="label">Jugador</div>
+                <div class="big-name">Cazador de tareas</div>
+              </div>
+              <div class="hearts" id="heartDisplay">❤ ❤ ❤ ❤ ❤</div>
+            </div>
+            <div class="hp-wrap">
+              <div class="hp-bar"><div class="hp-fill player" id="playerHpFill"></div></div>
+              <div id="playerHpText">5 / 5 vidas</div>
+            </div>
+          </div>
+
+          <div class="scene">
+            <div class="boss-zone">
+              <div class="dragon" id="dragon">
+                <div class="wing-left"></div>
+                <div class="wing-right"></div>
+                <div class="tail"></div>
+                <div class="body"></div>
+                <div class="neck"></div>
+                <div class="head"></div>
+                <div class="jaw"></div>
+                <div class="eye"></div>
+                <div class="horn1"></div>
+                <div class="horn2"></div>
+                <div class="leg1"></div>
+                <div class="leg2"></div>
+                <div class="flame"></div>
+              </div>
+            </div>
+
+            <div class="hero-zone">
+              <div class="hero">
+                <div class="cape"></div>
+                <div class="head"></div>
+                <div class="body"></div>
+                <div class="arm left"></div>
+                <div class="arm right"></div>
+                <div class="leg left"></div>
+                <div class="leg right"></div>
+                <div class="sword"></div>
+              </div>
+            </div>
+
+            <div class="damage-pop damage-boss" id="bossDamage">-10</div>
+            <div class="damage-pop damage-player" id="playerDamage">-1</div>
+
+            <div class="lava"></div>
+          </div>
+
+          <div class="log" id="battleLog">
+            La batalla comienza. Contesta las 30 preguntas para destruir al dragón.
+          </div>
+        </div>
+      </section>
+
+      <section class="panel question-panel">
+        <div class="question-inner">
+          <div class="boss-mini">
+            <div class="icon">🐉</div>
+            <div>
+              <div style="font-weight:800;color:#fff">Modo jefe final</div>
+              <div style="color:#d4b0b0;font-size:.92rem">Cada acierto daña al dragón. Cada error te quita una vida.</div>
+            </div>
+          </div>
+
+          <div class="meta">
+            <div class="box">
+              <div class="num" id="questionNumber">1 / 30</div>
+              <div class="txt">Pregunta</div>
+            </div>
+            <div class="box">
+              <div class="num" id="scoreText">0</div>
+              <div class="txt">Aciertos</div>
+            </div>
+            <div class="box">
+              <div class="num" id="comboText">0</div>
+              <div class="txt">Racha</div>
+            </div>
+          </div>
+
+          <div id="questionArea">
+            <div class="question-card">
+              <div class="topic-pill" id="topicPill">Inicio</div>
+              <p class="question-text" id="questionText">Pulsa el botón para comenzar la misión final.</p>
+              <div class="answers" id="answers"></div>
+              <div class="next-wrap">
+                <button class="btn btn-main" id="startBtn">Comenzar batalla</button>
+                <button class="btn btn-ghost hidden" id="nextBtn">Siguiente pregunta</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="victory-screen" id="victoryScreen">
+            <h2 class="final-title">¡Victoria total!</h2>
+            <p class="final-text">
+              Has derrotado al dragón del Intermedio III. Completaste el repaso final de 6A, 6B, 7A y 7B.
+            </p>
+          </div>
+
+          <div class="defeat-screen" id="defeatScreen">
+            <h2 class="final-title">Misión fallida</h2>
+            <p class="final-text">
+              El dragón te venció esta vez. Puedes abandonar la misión o recargar la página para intentar otra vez.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      // 6A Passive
+      {
+        topic: "6A Passive",
+        question: "Choose the correct passive sentence.",
+        answers: [
+          "The film directed by Ridley Scott.",
+          "The film was directed by Ridley Scott.",
+          "The film was direct by Ridley Scott.",
+          "The film is directing by Ridley Scott."
+        ],
+        correct: 1
+      },
+      {
+        topic: "6A Passive",
+        question: "Passive voice is formed with:",
+        answers: [
+          "have + infinitive",
+          "modal + ing",
+          "to be + past participle",
+          "subject + object"
+        ],
+        correct: 2
+      },
+      {
+        topic: "6A Passive",
+        question: "Choose the passive form of: 'Someone is repairing my laptop.'",
+        answers: [
+          "My laptop is repaired.",
+          "My laptop is being repaired.",
+          "My laptop repaired.",
+          "My laptop has repairing."
+        ],
+        correct: 1
+      },
+      {
+        topic: "6A Movie vocabulary",
+        question: "The music of a film is called the...",
+        answers: ["plot", "soundtrack", "scene", "review"],
+        correct: 1
+      },
+      {
+        topic: "6A Movie vocabulary",
+        question: "A film that continues the story of another film is a...",
+        answers: ["sequel", "script", "cast", "critic"],
+        correct: 0
+      },
+      {
+        topic: "6A Passive",
+        question: "Choose the correct sentence.",
+        answers: [
+          "The DVD hasn't been released yet.",
+          "The DVD hasn't released yet.",
+          "The DVD didn't been released yet.",
+          "The DVD isn't release yet."
+        ],
+        correct: 0
+      },
+      {
+        topic: "6A Passive",
+        question: "When the agent is important, we use...",
+        answers: ["for", "with", "by", "from"],
+        correct: 2
+      },
+
+      // 6B Modals/body parts/pronunciation
+      {
+        topic: "6B Modals of deduction",
+        question: "He’s carrying a camera and a guidebook. He ______ be a tourist.",
+        answers: ["must", "can't", "might not", "should"],
+        correct: 0
+      },
+      {
+        topic: "6B Modals of deduction",
+        question: "If something is impossible in your deduction, you use...",
+        answers: ["must", "might", "can't", "may"],
+        correct: 2
+      },
+      {
+        topic: "6B Body parts",
+        question: "Which body part do you use to hear?",
+        answers: ["tongue", "ears", "chin", "thumb"],
+        correct: 1
+      },
+      {
+        topic: "6B Action verbs",
+        question: "The audience ______ when I finished singing.",
+        answers: ["bit", "pointed", "clapped", "stared"],
+        correct: 2
+      },
+      {
+        topic: "6B Pronunciation",
+        question: "Which word has the /aʊ/ sound?",
+        answers: ["face", "mouth", "nose", "toes"],
+        correct: 1
+      },
+      {
+        topic: "6B Body parts",
+        question: "The plural of tooth is...",
+        answers: ["tooths", "teeth", "toothes", "toothsies"],
+        correct: 1
+      },
+      {
+        topic: "6B Action verbs",
+        question: "A person looks at you for a long time without speaking. The verb is...",
+        answers: ["smile", "nod", "stare", "taste"],
+        correct: 2
+      },
+
+      // 7A first conditional / future clauses / school vocab
+      {
+        topic: "7A First conditional",
+        question: "Choose the correct sentence.",
+        answers: [
+          "If you will study, you'll pass.",
+          "If you study, you'll pass.",
+          "If you studied, you'll pass.",
+          "If you study, you pass always."
+        ],
+        correct: 1
+      },
+      {
+        topic: "7A Future clauses",
+        question: "We’ll have dinner when your father ______ home.",
+        answers: ["will get", "gets", "got", "getting"],
+        correct: 1
+      },
+      {
+        topic: "7A Future clauses",
+        question: "I won’t go to bed until you ______ home.",
+        answers: ["come", "will come", "came", "coming"],
+        correct: 0
+      },
+      {
+        topic: "7A First conditional",
+        question: "'Unless' is closest in meaning to:",
+        answers: ["because", "if...not", "when", "after"],
+        correct: 1
+      },
+      {
+        topic: "7A Education",
+        question: "A school paid for by the government in the UK is a ______ school.",
+        answers: ["boarding", "private", "state", "secondary"],
+        correct: 2
+      },
+      {
+        topic: "7A Education",
+        question: "Children at primary school in the UK are often called...",
+        answers: ["teachers", "pupils", "graduates", "critics"],
+        correct: 1
+      },
+      {
+        topic: "7A Discipline and exams",
+        question: "If you cheat in an exam, you might be...",
+        answers: ["spacious", "punished", "cosy", "subtitled"],
+        correct: 1
+      },
+      {
+        topic: "7A Make / let / allow",
+        question: "Choose the correct sentence.",
+        answers: [
+          "They don't let us to bring unhealthy food.",
+          "They don't let us bring unhealthy food.",
+          "They don't allow us bring unhealthy food.",
+          "They don't make us to bring unhealthy food."
+        ],
+        correct: 1
+      },
+      {
+        topic: "7A Exams",
+        question: "Marc hopes he'll ______ the exam.",
+        answers: ["fail", "pass", "cheat", "expel"],
+        correct: 1
+      },
+
+      // 7B second conditional / houses
+      {
+        topic: "7B Second conditional",
+        question: "Choose the correct structure of the second conditional.",
+        answers: [
+          "if + present simple, will + verb",
+          "if + past simple, would + verb",
+          "if + will, past simple",
+          "if + infinitive, could be"
+        ],
+        correct: 1
+      },
+      {
+        topic: "7B Second conditional",
+        question: "If I ______ more money, I’d buy a bigger house.",
+        answers: ["have", "had", "will have", "am having"],
+        correct: 1
+      },
+      {
+        topic: "7B Advice",
+        question: "Which expression is commonly used to give advice?",
+        answers: [
+          "If I am you...",
+          "If I was you, I will...",
+          "If I were you, I'd...",
+          "If you will, I..."
+        ],
+        correct: 2
+      },
+      {
+        topic: "7B Where people live",
+        question: "Choose the correct expression.",
+        answers: ["on a city", "in a city", "on the village", "in the east coast"],
+        correct: 1
+      },
+      {
+        topic: "7B Houses",
+        question: "The top part of a house is the...",
+        answers: ["ceiling", "roof", "attic", "chimney"],
+        correct: 1
+      },
+      {
+        topic: "7B Houses",
+        question: "A chimney is...",
+        answers: [
+          "the place inside where you burn wood",
+          "the structure on the roof",
+          "the top of a room",
+          "a type of balcony"
+        ],
+        correct: 1
+      },
+      {
+        topic: "7B Describing a house",
+        question: "A house with a lot of space is...",
+        answers: ["cosy", "modern", "spacious", "wooden"],
+        correct: 2
+      },
+      {
+        topic: "7B Parts of a house",
+        question: "Which one means 'sótano'?",
+        answers: ["attic", "roof", "balcony", "basement"],
+        correct: 3
+      },
+      {
+        topic: "7B Where people live",
+        question: "The correct expression is: I live ______ the outskirts of the city.",
+        answers: ["in", "on", "at", "under"],
+        correct: 1
+      }
+    ];
+
+    // Estado
+    let currentIndex = -1;
+    let score = 0;
+    let combo = 0;
+    let playerLives = 5;
+    let bossHp = 100;
+    let locked = false;
+
+    const DAMAGE_PER_HIT = Math.ceil(100 / questions.length); // ~4
+    const questionText = document.getElementById("questionText");
+    const answersBox = document.getElementById("answers");
+    const topicPill = document.getElementById("topicPill");
+    const questionNumber = document.getElementById("questionNumber");
+    const scoreText = document.getElementById("scoreText");
+    const comboText = document.getElementById("comboText");
+    const battleLog = document.getElementById("battleLog");
+    const nextBtn = document.getElementById("nextBtn");
+    const startBtn = document.getElementById("startBtn");
+    const bossHpFill = document.getElementById("bossHpFill");
+    const playerHpFill = document.getElementById("playerHpFill");
+    const bossHpText = document.getElementById("bossHpText");
+    const playerHpText = document.getElementById("playerHpText");
+    const heartDisplay = document.getElementById("heartDisplay");
+    const bossDamage = document.getElementById("bossDamage");
+    const playerDamage = document.getElementById("playerDamage");
+    const dragon = document.getElementById("dragon");
+    const homeBtn = document.getElementById("homeBtn");
+    const victoryScreen = document.getElementById("victoryScreen");
+    const defeatScreen = document.getElementById("defeatScreen");
+
+    function shuffle(array){
+      for(let i = array.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    shuffle(questions);
+
+    function createEmbers(){
+      const embers = document.getElementById("embers");
+      for(let i=0;i<34;i++){
+        const e = document.createElement("span");
+        e.className = "ember";
+        e.style.left = Math.random() * 100 + "vw";
+        e.style.animationDuration = (5 + Math.random()*7) + "s";
+        e.style.animationDelay = (Math.random()*6) + "s";
+        e.style.transform = `scale(${.7 + Math.random()*1.4})`;
+        embers.appendChild(e);
+      }
+    }
+
+    function updateBars(){
+      bossHp = Math.max(0, bossHp);
+      playerLives = Math.max(0, playerLives);
+
+      bossHpFill.style.width = bossHp + "%";
+      playerHpFill.style.width = (playerLives / 5) * 100 + "%";
+      bossHpText.textContent = `${bossHp} / 100 HP`;
+      playerHpText.textContent = `${playerLives} / 5 vidas`;
+
+      const full = "❤ ";
+      const empty = "🖤 ";
+      heartDisplay.textContent = (full.repeat(playerLives) + empty.repeat(5 - playerLives)).trim();
+
+      if(bossHp <= 30){
+        dragon.style.filter = "drop-shadow(0 0 20px rgba(255,80,80,.3)) drop-shadow(0 16px 24px rgba(0,0,0,.45))";
+      }
+    }
+
+    function showDamage(el, text){
+      el.textContent = text;
+      el.classList.remove("show");
+      void el.offsetWidth;
+      el.classList.add("show");
+    }
+
+    function log(msg){
+      battleLog.innerHTML = msg;
+    }
+
+    function renderQuestion(){
+      if(currentIndex >= questions.length){
+        if(bossHp > 0) bossHp = 0;
+        updateBars();
+        winGame();
+        return;
+      }
+
+      locked = false;
+      const q = questions[currentIndex];
+      topicPill.textContent = q.topic;
+      questionText.textContent = q.question;
+      questionNumber.textContent = `${currentIndex + 1} / ${questions.length}`;
+      scoreText.textContent = score;
+      comboText.textContent = combo;
+      answersBox.innerHTML = "";
+
+      q.answers.forEach((ans, idx)=>{
+        const btn = document.createElement("button");
+        btn.className = "answer-btn";
+        btn.textContent = ans;
+        btn.onclick = ()=>answerQuestion(idx, btn);
+        answersBox.appendChild(btn);
+      });
+
+      nextBtn.classList.add("hidden");
+      startBtn.classList.add("hidden");
+    }
+
+    function answerQuestion(selectedIndex, clickedBtn){
+      if(locked) return;
+      locked = true;
+
+      const q = questions[currentIndex];
+      const buttons = [...answersBox.querySelectorAll(".answer-btn")];
+      const correctBtn = buttons[q.correct];
+
+      if(selectedIndex === q.correct){
+        clickedBtn.classList.add("correct");
+        score++;
+        combo++;
+        const damage = Math.max(3, Math.ceil(DAMAGE_PER_HIT));
+        bossHp -= damage;
+        showDamage(bossDamage, `-${damage}`);
+        log(`⚔️ ¡Golpe crítico! Respuesta correcta. Le quitaste <strong>${damage} HP</strong> al dragón.`);
+      } else {
+        clickedBtn.classList.add("wrong");
+        correctBtn.classList.add("correct");
+        combo = 0;
+        playerLives--;
+        showDamage(playerDamage, "-1 vida");
+        log(`🔥 Fallaste. El dragón te quemó y perdiste <strong>1 vida</strong>.`);
+      }
+
+      buttons.forEach(btn => btn.disabled = true);
+      updateBars();
+      scoreText.textContent = score;
+      comboText.textContent = combo;
+
+      if(playerLives <= 0){
+        loseGame();
+        return;
+      }
+
+      if(bossHp <= 0){
+        winGame();
+        return;
+      }
+
+      nextBtn.classList.remove("hidden");
+    }
+
+    function nextQuestion(){
+      currentIndex++;
+      renderQuestion();
+    }
+
+    function winGame(){
+      answersBox.innerHTML = "";
+      topicPill.textContent = "Misión completa";
+      questionText.textContent = "El dragón ha sido derrotado.";
+      nextBtn.classList.add("hidden");
+      startBtn.classList.add("hidden");
+      victoryScreen.style.display = "block";
+      homeBtn.classList.remove("hidden");
+      log(`🏆 ¡Victoria! Has destruido al jefe final con <strong>${score}</strong> aciertos.`);
+      dragon.style.opacity = ".35";
+      dragon.style.transform = "scale(.96) rotate(-6deg)";
+    }
+
+    function loseGame(){
+      answersBox.innerHTML = "";
+      topicPill.textContent = "Derrota";
+      questionText.textContent = "Te quedaste sin vidas.";
+      nextBtn.classList.add("hidden");
+      startBtn.classList.add("hidden");
+      defeatScreen.style.display = "block";
+      log(`💀 El dragón ganó esta vez. Puedes abandonar la misión o recargar la página.`);
+    }
+
+    startBtn.addEventListener("click", ()=>{
+      currentIndex = 0;
+      renderQuestion();
+      log("⚔️ La batalla empezó. Responde con cuidado.");
+    });
+
+    nextBtn.addEventListener("click", nextQuestion);
+
+    createEmbers();
+    updateBars();
+  </script>
+</body>
+</html>
