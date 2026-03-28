@@ -1,4 +1,908 @@
-<head> 
-  <title>Proximamente....</title>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unit 7A - First Conditional and Future Time Clauses</title>
+  <style>
+    :root{
+      --bg:#eef2ff;
+      --bg2:#f8faff;
+      --panel:#ffffff;
+      --card:#f4f7ff;
+      --line:#d8e0ff;
+      --text:#1e1b4b;
+      --muted:#4c4f7d;
+      --blue:#243c8f;
+      --blue2:#3b82f6;
+      --purple:#7c3aed;
+      --purple2:#a78bfa;
+      --green:#16a34a;
+      --red:#dc2626;
+      --shadow:0 10px 30px rgba(52, 79, 160, .12);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(124,58,237,.12), transparent 25%),
+        radial-gradient(circle at top left, rgba(59,130,246,.12), transparent 28%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      color:var(--text);
+      line-height:1.65;
+    }
+
+    header{
+      padding:56px 20px 30px;
+      text-align:center;
+      background:linear-gradient(135deg, #243c8f 0%, #4f46e5 55%, #7c3aed 100%);
+      color:white;
+      position:relative;
+      overflow:hidden;
+    }
+
+    header::before,
+    header::after{
+      content:"";
+      position:absolute;
+      border-radius:50%;
+      background:rgba(255,255,255,.08);
+    }
+
+    header::before{
+      width:260px;
+      height:260px;
+      top:-80px;
+      left:-60px;
+    }
+
+    header::after{
+      width:200px;
+      height:200px;
+      bottom:-70px;
+      right:-40px;
+    }
+
+    header h1{
+      margin:0;
+      font-size:clamp(2rem, 4vw, 3.1rem);
+      position:relative;
+      z-index:1;
+    }
+
+    header p{
+      max-width:900px;
+      margin:14px auto 0;
+      font-size:1.05rem;
+      color:#eef2ff;
+      position:relative;
+      z-index:1;
+    }
+
+    nav{
+      position:sticky;
+      top:0;
+      z-index:50;
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:10px;
+      padding:14px;
+      background:rgba(255,255,255,.88);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 8px 18px rgba(0,0,0,.05);
+    }
+
+    nav a{
+      text-decoration:none;
+      color:var(--blue);
+      background:#edf2ff;
+      border:1px solid #dbe4ff;
+      padding:10px 15px;
+      border-radius:999px;
+      font-weight:bold;
+      transition:.25s ease;
+    }
+
+    nav a:hover{
+      background:linear-gradient(135deg, var(--blue2), var(--purple));
+      color:white;
+      transform:translateY(-1px);
+    }
+
+    main{
+      max-width:1150px;
+      margin:auto;
+      padding:26px 18px 60px;
+    }
+
+    section{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:26px;
+      margin:20px 0;
+      box-shadow:var(--shadow);
+    }
+
+    h2{
+      margin-top:0;
+      color:var(--blue);
+      font-size:1.9rem;
+    }
+
+    h3{
+      color:var(--purple);
+      margin-top:26px;
+      margin-bottom:10px;
+    }
+
+    h4{
+      margin:0 0 8px;
+      color:var(--blue);
+    }
+
+    p{
+      margin:10px 0;
+    }
+
+    .intro-box{
+      background:linear-gradient(135deg, #e0e7ff, #f3e8ff);
+      border-left:6px solid var(--purple);
+      padding:16px 18px;
+      border-radius:16px;
+      color:var(--text);
+      margin:14px 0;
+    }
+
+    .formula{
+      background:linear-gradient(135deg, #dbeafe, #ede9fe);
+      border:1px solid #c7d2fe;
+      border-left:6px solid var(--blue2);
+      padding:16px 18px;
+      border-radius:16px;
+      font-weight:bold;
+      margin:14px 0;
+    }
+
+    .warning{
+      background:linear-gradient(135deg, #fff7ed, #fef2f2);
+      border-left:6px solid #f59e0b;
+      padding:16px 18px;
+      border-radius:16px;
+      margin:14px 0;
+    }
+
+    .success{
+      background:linear-gradient(135deg, #ecfdf5, #eff6ff);
+      border-left:6px solid var(--green);
+      padding:16px 18px;
+      border-radius:16px;
+      margin:14px 0;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
+      gap:16px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .tag{
+      display:inline-block;
+      margin:4px 6px 0 0;
+      padding:6px 11px;
+      border-radius:999px;
+      background:linear-gradient(135deg, #dbeafe, #ede9fe);
+      color:var(--blue);
+      font-size:.92rem;
+      font-weight:bold;
+      border:1px solid #d8dfff;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:14px;
+      overflow:hidden;
+      border-radius:16px;
+    }
+
+    th, td{
+      border:1px solid #dbe4ff;
+      padding:12px;
+      vertical-align:top;
+      text-align:left;
+    }
+
+    th{
+      background:linear-gradient(135deg, var(--blue), var(--purple));
+      color:white;
+    }
+
+    tr:nth-child(even){
+      background:#f8faff;
+    }
+
+    ul li{
+      margin-bottom:8px;
+    }
+
+    code{
+      background:#eef2ff;
+      padding:2px 8px;
+      border-radius:8px;
+      color:var(--purple);
+      font-weight:bold;
+    }
+
+    .exercise{
+      background:linear-gradient(180deg, #ffffff, #f8fbff);
+      border:1px solid #dce5ff;
+      border-radius:20px;
+      padding:20px;
+      margin-top:20px;
+    }
+
+    .q{
+      background:#f7f9ff;
+      border:1px solid #e1e8ff;
+      border-radius:16px;
+      padding:15px;
+      margin-bottom:14px;
+    }
+
+    .q p{
+      margin:0 0 10px;
+      font-weight:bold;
+      color:var(--text);
+    }
+
+    select, input[type="text"]{
+      width:100%;
+      max-width:460px;
+      padding:11px 12px;
+      border-radius:12px;
+      border:1px solid #bcccf8;
+      background:white;
+      color:var(--text);
+      font-size:1rem;
+      outline:none;
+    }
+
+    input[type="text"]:focus,
+    select:focus{
+      border-color:var(--purple);
+      box-shadow:0 0 0 4px rgba(124,58,237,.12);
+    }
+
+    button{
+      margin-top:8px;
+      border:none;
+      background:linear-gradient(135deg, var(--blue2), var(--purple));
+      color:white;
+      padding:12px 18px;
+      border-radius:12px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:.25s ease;
+      box-shadow:0 8px 18px rgba(79,70,229,.18);
+    }
+
+    button:hover{
+      transform:translateY(-1px);
+      filter:brightness(1.03);
+    }
+
+    .result{
+      margin-top:14px;
+      font-weight:bold;
+      font-size:1rem;
+    }
+
+    .good{color:var(--green)}
+    .bad{color:var(--red)}
+
+    .footer-buttons{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-top:28px;
+    }
+
+    .footer-buttons a{
+      text-decoration:none;
+      padding:14px 22px;
+      border-radius:14px;
+      font-weight:bold;
+      transition:.25s ease;
+      box-shadow:var(--shadow);
+    }
+
+    .btn-back{
+      background:#e0e7ff;
+      color:var(--blue);
+      border:1px solid #c7d2fe;
+    }
+
+    .btn-next{
+      background:linear-gradient(135deg, var(--blue2), var(--purple));
+      color:white;
+    }
+
+    .footer-buttons a:hover{
+      transform:translateY(-2px) scale(1.02);
+    }
+
+    footer{
+      text-align:center;
+      color:var(--muted);
+      padding:10px 18px 40px;
+    }
+
+    @media (max-width: 768px){
+      section{padding:18px}
+      nav{padding:10px}
+      nav a{font-size:.9rem}
+      .footer-buttons a{
+        width:100%;
+        text-align:center;
+      }
+      table{
+        font-size:.92rem;
+      }
+    }
+  </style>
 </head>
+<body>
+
+  <header>
+    <h1>Unit 7A</h1>
+    <p>First conditional and future time clauses + when, until, before, after, as soon as. Incluye teoría, vocabulario principal de la unidad, ejemplos claros y preguntas para practicar.</p>
+  </header>
+
+  <nav>
+    <a href="#marco">Marco teórico</a>
+    <a href="#facil">Explicación sencilla</a>
+    <a href="#estructuras">Estructuras</a>
+    <a href="#vocabulario">Vocabulario</a>
+    <a href="#preguntas">Preguntas</a>
+  </nav>
+
+  <main>
+
+    <section id="marco">
+      <h2>Marco teórico — Unit 7A</h2>
+
+      <p>La unidad 7A se centra en dos temas principales: el <strong>first conditional</strong> y las <strong>future time clauses</strong>. Ambos se usan para hablar del futuro, pero tienen funciones un poco diferentes.</p>
+
+      <h3>1. First conditional</h3>
+      <p>El <strong>first conditional</strong> se usa para hablar de una situación <strong>posible o probable en el futuro</strong> y de su consecuencia. Es decir, expresa algo que sí puede pasar en la vida real.</p>
+
+      <div class="formula">
+        Estructura principal: <code>if + present simple, will / won’t + verbo base</code>
+      </div>
+
+      <p>Ejemplos:</p>
+      <ul>
+        <li><strong>If you work hard, you’ll pass your exams.</strong></li>
+        <li><strong>The teacher won’t be very pleased if we’re late for class.</strong></li>
+        <li><strong>If you have time, come and see us next week.</strong></li>
+      </ul>
+
+      <div class="warning">
+        <strong>Regla importante:</strong> después de <strong>if</strong> no se usa <strong>will</strong>.  
+        Se usa <strong>present simple</strong>, aunque la idea sea futura.
+      </div>
+
+      <p>Por eso:</p>
+      <ul>
+        <li>✅ <strong>If you study, you’ll pass.</strong></li>
+        <li>❌ <strong>If you will study, you’ll pass.</strong></li>
+      </ul>
+
+      <h3>2. Uso de unless</h3>
+      <p><strong>Unless</strong> significa <strong>a menos que</strong> o también puede entenderse como <strong>if...not</strong>. Se usa para expresar una condición negativa.</p>
+
+      <div class="formula">
+        <code>unless + present simple</code>
+      </div>
+
+      <p>Ejemplos:</p>
+      <ul>
+        <li><strong>Alison won’t get into university unless she gets good grades.</strong></li>
+        <li><strong>I won’t go unless you go too.</strong></li>
+      </ul>
+
+      <p>Comparación:</p>
+      <ul>
+        <li><strong>She won’t get into university unless she gets good grades.</strong></li>
+        <li><strong>She won’t get into university if she doesn’t get good grades.</strong></li>
+      </ul>
+
+      <h3>3. Future time clauses</h3>
+      <p>Las <strong>future time clauses</strong> son oraciones de tiempo que hablan del futuro con palabras como <strong>when, until, before, after</strong> y <strong>as soon as</strong>.</p>
+
+      <div class="formula">
+        En estas estructuras también usamos <code>present simple</code>, no <code>will</code>, después del conector.
+      </div>
+
+      <p>Ejemplos:</p>
+      <ul>
+        <li><strong>We’ll have dinner when your father gets home.</strong></li>
+        <li><strong>As soon as you get your exam results, call me.</strong></li>
+        <li><strong>I won’t go to bed until you come home.</strong></li>
+        <li><strong>I’ll have a quick lunch before I leave.</strong></li>
+        <li><strong>After I finish university, I’ll probably take a year off and travel.</strong></li>
+      </ul>
+
+      <div class="warning">
+        <strong>Ojo:</strong> después de <strong>when, until, before, after</strong> y <strong>as soon as</strong> no va futuro.  
+        Va <strong>presente simple</strong>.
+      </div>
+
+      <h3>4. Diferencia entre ambos</h3>
+      <div class="grid">
+        <div class="card">
+          <h4>First conditional</h4>
+          <p>Habla de una condición y su consecuencia futura.</p>
+          <p><strong>Ejemplo:</strong> If I study, I’ll pass.</p>
+        </div>
+        <div class="card">
+          <h4>Future time clauses</h4>
+          <p>Hablan de una acción futura conectada con tiempo.</p>
+          <p><strong>Ejemplo:</strong> I’ll call you when I arrive.</p>
+        </div>
+      </div>
+
+      <h3>5. También se puede usar imperativo</h3>
+      <p>En vez de usar <strong>will</strong>, a veces la segunda parte puede ir en imperativo, sobre todo para dar instrucciones.</p>
+
+      <ul>
+        <li><strong>If you have any problems, call me.</strong></li>
+        <li><strong>As soon as you get home, text me.</strong></li>
+      </ul>
+    </section>
+
+    <section id="facil">
+      <h2>Explicación sencilla</h2>
+
+      <div class="intro-box">
+        La unidad 7A enseña a hablar de cosas que pueden pasar en el futuro.  
+        La idea más importante es que en inglés, después de <strong>if</strong>, <strong>when</strong>, <strong>until</strong>, <strong>before</strong>, <strong>after</strong> y <strong>as soon as</strong>, usamos <strong>presente simple</strong>, no <strong>will</strong>.
+      </div>
+
+      <p>Ejemplos fáciles:</p>
+      <ul>
+        <li><strong>If you study, you’ll pass.</strong> → Si estudias, aprobarás.</li>
+        <li><strong>I’ll call you when I get home.</strong> → Te llamaré cuando llegue a casa.</li>
+        <li><strong>I won’t go unless you go too.</strong> → No iré a menos que tú también vayas.</li>
+        <li><strong>Before I leave, I’ll talk to you.</strong> → Antes de irme, hablaré contigo.</li>
+      </ul>
+
+      <div class="success">
+        Truco rápido:
+        <ul>
+          <li><strong>if</strong> = si</li>
+          <li><strong>unless</strong> = a menos que</li>
+          <li><strong>when</strong> = cuando</li>
+          <li><strong>until</strong> = hasta que</li>
+          <li><strong>before</strong> = antes de</li>
+          <li><strong>after</strong> = después de</li>
+          <li><strong>as soon as</strong> = tan pronto como</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="estructuras">
+      <h2>Estructuras principales</h2>
+
+      <table>
+        <tr>
+          <th>Estructura</th>
+          <th>Uso</th>
+          <th>Ejemplo</th>
+        </tr>
+        <tr>
+          <td><code>if + present simple, will + verbo</code></td>
+          <td>Condición real en el futuro</td>
+          <td>If you work hard, you’ll pass your exams.</td>
+        </tr>
+        <tr>
+          <td><code>if + present simple, won’t + verbo</code></td>
+          <td>Consecuencia negativa</td>
+          <td>If we’re late, the teacher won’t be pleased.</td>
+        </tr>
+        <tr>
+          <td><code>unless + present simple</code></td>
+          <td>Condición negativa</td>
+          <td>I won’t go unless you go too.</td>
+        </tr>
+        <tr>
+          <td><code>when + present simple</code></td>
+          <td>Acción futura conectada con tiempo</td>
+          <td>We’ll eat when Dad gets home.</td>
+        </tr>
+        <tr>
+          <td><code>until + present simple</code></td>
+          <td>Hasta que algo ocurra</td>
+          <td>I won’t sleep until you arrive.</td>
+        </tr>
+        <tr>
+          <td><code>before + present simple</code></td>
+          <td>Antes de una acción futura</td>
+          <td>I’ll eat before I leave.</td>
+        </tr>
+        <tr>
+          <td><code>after + present simple</code></td>
+          <td>Después de una acción futura</td>
+          <td>After I finish university, I’ll travel.</td>
+        </tr>
+        <tr>
+          <td><code>as soon as + present simple</code></td>
+          <td>Tan pronto como</td>
+          <td>As soon as you get the result, call me.</td>
+        </tr>
+      </table>
+
+      <h3>Errores comunes</h3>
+      <ul>
+        <li>❌ <strong>If I will have time, I’ll go.</strong></li>
+        <li>✅ <strong>If I have time, I’ll go.</strong></li>
+        <li>❌ <strong>I’ll call you when I will arrive.</strong></li>
+        <li>✅ <strong>I’ll call you when I arrive.</strong></li>
+        <li>❌ <strong>I won’t go unless I won’t finish.</strong></li>
+        <li>✅ <strong>I won’t go unless I finish.</strong></li>
+      </ul>
+    </section>
+
+    <section id="vocabulario">
+      <h2>Vocabulario — Unit 7A</h2>
+
+      <h3>1. Education — UK school system</h3>
+      <div>
+        <span class="tag">boarding school = internado</span>
+        <span class="tag">degree = título universitario</span>
+        <span class="tag">head teacher = director(a)</span>
+        <span class="tag">nursery school = inicial / guardería</span>
+        <span class="tag">primary school = primaria</span>
+        <span class="tag">private school = escuela privada</span>
+        <span class="tag">pupils = alumnos</span>
+        <span class="tag">secondary school = secundaria</span>
+        <span class="tag">state school = escuela pública</span>
+        <span class="tag">students = estudiantes</span>
+        <span class="tag">terms = trimestres / periodos</span>
+      </div>
+
+      <h3>2. Education — US school system</h3>
+      <div>
+        <span class="tag">college = universidad</span>
+        <span class="tag">elementary school = primaria</span>
+        <span class="tag">grades = grados</span>
+        <span class="tag">high school = secundaria</span>
+        <span class="tag">kindergarten = jardín / inicial</span>
+        <span class="tag">semesters = semestres</span>
+        <span class="tag">twelfth grade = último grado</span>
+      </div>
+
+      <h3>3. Discipline and exams</h3>
+      <table>
+        <tr>
+          <th>Inglés</th>
+          <th>Español</th>
+          <th>Ejemplo</th>
+        </tr>
+        <tr>
+          <td>not be allowed to</td>
+          <td>no tener permitido</td>
+          <td>We aren’t allowed to take our phones to school.</td>
+        </tr>
+        <tr>
+          <td>be expelled</td>
+          <td>ser expulsado</td>
+          <td>You might be expelled if you cheat.</td>
+        </tr>
+        <tr>
+          <td>be punished</td>
+          <td>ser castigado</td>
+          <td>If you misbehave, you’ll be punished.</td>
+        </tr>
+        <tr>
+          <td>cheat</td>
+          <td>copiar / hacer trampa</td>
+          <td>Don’t cheat in an exam.</td>
+        </tr>
+        <tr>
+          <td>let</td>
+          <td>dejar / permitir</td>
+          <td>They don’t let us bring unhealthy food.</td>
+        </tr>
+        <tr>
+          <td>make</td>
+          <td>hacer que alguien haga algo</td>
+          <td>The teacher made me stay after class.</td>
+        </tr>
+        <tr>
+          <td>misbehave</td>
+          <td>portarse mal</td>
+          <td>If you misbehave, you’ll get into trouble.</td>
+        </tr>
+        <tr>
+          <td>fail</td>
+          <td>desaprobar</td>
+          <td>If I don’t revise, I might fail.</td>
+        </tr>
+        <tr>
+          <td>pass</td>
+          <td>aprobar</td>
+          <td>If I study, I’ll pass.</td>
+        </tr>
+        <tr>
+          <td>result</td>
+          <td>resultado</td>
+          <td>I’ll call you when I get the result.</td>
+        </tr>
+        <tr>
+          <td>revise</td>
+          <td>repasar / estudiar</td>
+          <td>Before the exam, I need to revise.</td>
+        </tr>
+        <tr>
+          <td>take an exam</td>
+          <td>dar / rendir un examen</td>
+          <td>I have to take an important exam next week.</td>
+        </tr>
+      </table>
+
+      <h3>4. Conectores de gramática</h3>
+      <div>
+        <span class="tag">if = si</span>
+        <span class="tag">unless = a menos que</span>
+        <span class="tag">when = cuando</span>
+        <span class="tag">until = hasta que</span>
+        <span class="tag">before = antes de</span>
+        <span class="tag">after = después de</span>
+        <span class="tag">as soon as = tan pronto como</span>
+        <span class="tag">will = futuro</span>
+        <span class="tag">won’t = no + futuro</span>
+      </div>
+
+      <h3>5. Make, let, allow</h3>
+      <div class="grid">
+        <div class="card">
+          <h4>let</h4>
+          <p>Significa <strong>dejar / permitir</strong>.</p>
+          <p><code>let + persona + verbo base</code></p>
+          <p><strong>They let us play games.</strong></p>
+        </div>
+        <div class="card">
+          <h4>make</h4>
+          <p>Significa <strong>hacer que alguien haga algo</strong>.</p>
+          <p><code>make + persona + verbo base</code></p>
+          <p><strong>The teacher made me do extra homework.</strong></p>
+        </div>
+        <div class="card">
+          <h4>allow</h4>
+          <p>Significa <strong>permitir</strong>.</p>
+          <p><code>allow + persona + to + verbo</code></p>
+          <p><strong>They allow us to use the library.</strong></p>
+        </div>
+      </div>
+
+      <div class="warning">
+        <strong>Recuerda:</strong>  
+        <strong>make</strong> y <strong>let</strong> van sin <strong>to</strong>.  
+        <strong>allow</strong> sí va con <strong>to</strong>.
+      </div>
+    </section>
+
+    <section id="preguntas">
+      <h2>Preguntas interactivas</h2>
+      <p>Resuelve estas preguntas para practicar la teoría y el vocabulario de la 7A.</p>
+
+      <div class="exercise">
+        <h3>Parte A — Opción múltiple</h3>
+
+        <div class="q">
+          <p>1. If you work hard, you ______ your exams.</p>
+          <select id="q1">
+            <option value="">Selecciona</option>
+            <option value="a">pass</option>
+            <option value="b">will pass</option>
+            <option value="c">passed</option>
+          </select>
+        </div>
+
+        <div class="q">
+          <p>2. I won’t go out ______ I finish my homework.</p>
+          <select id="q2">
+            <option value="">Selecciona</option>
+            <option value="a">unless</option>
+            <option value="b">until</option>
+            <option value="c">because</option>
+          </select>
+        </div>
+
+        <div class="q">
+          <p>3. We’ll have dinner when Dad ______ home.</p>
+          <select id="q3">
+            <option value="">Selecciona</option>
+            <option value="a">will get</option>
+            <option value="b">gets</option>
+            <option value="c">got</option>
+          </select>
+        </div>
+
+        <div class="q">
+          <p>4. A school paid for by the government in the UK is a ______ school.</p>
+          <select id="q4">
+            <option value="">Selecciona</option>
+            <option value="a">private</option>
+            <option value="b">state</option>
+            <option value="c">boarding</option>
+          </select>
+        </div>
+
+        <div class="q">
+          <p>5. If you cheat in an exam, you might be ______.</p>
+          <select id="q5">
+            <option value="">Selecciona</option>
+            <option value="a">punished</option>
+            <option value="b">kind</option>
+            <option value="c">free</option>
+          </select>
+        </div>
+
+        <button onclick="checkA()">Revisar Parte A</button>
+        <div id="resultA" class="result"></div>
+      </div>
+
+      <div class="exercise">
+        <h3>Parte B — Escribe la respuesta</h3>
+
+        <div class="q">
+          <p>6. Complete: If she ______ (study), she’ll pass the exam.</p>
+          <input id="q6" type="text" placeholder="Escribe una palabra" />
+        </div>
+
+        <div class="q">
+          <p>7. Complete: I’ll call you when I ______ home.</p>
+          <input id="q7" type="text" placeholder="Escribe una palabra" />
+        </div>
+
+        <div class="q">
+          <p>8. Complete: He won’t get into university unless he gets good ______.</p>
+          <input id="q8" type="text" placeholder="Escribe una palabra" />
+        </div>
+
+        <div class="q">
+          <p>9. Translate the key word: boarding school = ______</p>
+          <input id="q9" type="text" placeholder="Escribe en español" />
+        </div>
+
+        <div class="q">
+          <p>10. Complete: They don’t ______ us bring unhealthy food to school.</p>
+          <input id="q10" type="text" placeholder="Escribe una palabra" />
+        </div>
+
+        <button onclick="checkB()">Revisar Parte B</button>
+        <div id="resultB" class="result"></div>
+      </div>
+
+      <div class="exercise">
+        <h3>Parte C — Verdadero o falso</h3>
+
+        <div class="q">
+          <p>11. After <strong>if</strong>, we use <strong>will</strong>.</p>
+          <select id="q11">
+            <option value="">Selecciona</option>
+            <option value="a">Verdadero</option>
+            <option value="b">Falso</option>
+          </select>
+        </div>
+
+        <div class="q">
+          <p>12. <strong>Unless</strong> can mean <strong>if...not</strong>.</p>
+          <select id="q12">
+            <option value="">Selecciona</option>
+            <option value="a">Verdadero</option>
+            <option value="b">Falso</option>
+          </select>
+        </div>
+
+        <div class="q">
+          <p>13. After <strong>when</strong>, we usually use present simple to talk about the future.</p>
+          <select id="q13">
+            <option value="">Selecciona</option>
+            <option value="a">Verdadero</option>
+            <option value="b">Falso</option>
+          </select>
+        </div>
+
+        <button onclick="checkC()">Revisar Parte C</button>
+        <div id="resultC" class="result"></div>
+      </div>
+
+      <div class="footer-buttons">
+        <a class="btn-back" href="index.html">← Atrás</a>
+        <a class="btn-next" href="7B.html">Siguiente unidad →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Página de estudio — Unit 7A: First Conditional and Future Time Clauses
+  </footer>
+
+  <script>
+    function normalize(text){
+      return text
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, ' ')
+        .replace(/[.,!?]/g, '')
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function checkA(){
+      let score = 0;
+      if(document.getElementById('q1').value === 'b') score++;
+      if(document.getElementById('q2').value === 'b') score++;
+      if(document.getElementById('q3').value === 'b') score++;
+      if(document.getElementById('q4').value === 'b') score++;
+      if(document.getElementById('q5').value === 'a') score++;
+
+      const r = document.getElementById('resultA');
+      r.innerHTML = `Obtuviste <strong>${score}/5</strong> en la Parte A.`;
+      r.className = 'result ' + (score >= 4 ? 'good' : 'bad');
+    }
+
+    function checkB(){
+      let score = 0;
+
+      const answers = {
+        q6: ['studies'],
+        q7: ['get', 'arrive'],
+        q8: ['grades'],
+        q9: ['internado'],
+        q10: ['let']
+      };
+
+      for(const id in answers){
+        const user = normalize(document.getElementById(id).value);
+        if(answers[id].includes(user)){
+          score++;
+        }
+      }
+
+      const r = document.getElementById('resultB');
+      r.innerHTML = `Obtuviste <strong>${score}/5</strong> en la Parte B.`;
+      r.className = 'result ' + (score >= 4 ? 'good' : 'bad');
+    }
+
+    function checkC(){
+      let score = 0;
+      if(document.getElementById('q11').value === 'b') score++;
+      if(document.getElementById('q12').value === 'a') score++;
+      if(document.getElementById('q13').value === 'a') score++;
+
+      const r = document.getElementById('resultC');
+      r.innerHTML = `Obtuviste <strong>${score}/3</strong> en la Parte C.`;
+      r.className = 'result ' + (score >= 2 ? 'good' : 'bad');
+    }
+  </script>
+
+</body>
 </html>
