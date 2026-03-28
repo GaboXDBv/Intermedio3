@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Practica Speaking</title>
+  <style>
+    :root{
+      --bg:#0a0a0d;
+      --bg2:#141419;
+      --card:#18181f;
+      --card2:#1f1f28;
+      --text:#f5f5f7;
+      --muted:#b8b8c7;
+      --red:#ff2b2b;
+      --red2:#a30000;
+      --line:#2b2b36;
+      --ok:#24d16f;
+      --warn:#ffd166;
+      --shadow:0 12px 35px rgba(0,0,0,.35);
+      --radius:22px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,43,43,.18), transparent 25%),
+        radial-gradient(circle at top right, rgba(255,43,43,.10), transparent 22%),
+        linear-gradient(180deg, #08080a 0%, #101015 100%);
+      line-height:1.55;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background:rgba(10,10,13,.82);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+
+    .topbar-inner{
+      max-width:1280px;
+      margin:0 auto;
+      padding:14px 18px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .brand-badge{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, var(--red), #5c0000);
+      box-shadow:0 0 24px rgba(255,43,43,.35);
+      font-size:24px;
+    }
+
+    .brand h1{
+      margin:0;
+      font-size:1.45rem;
+      letter-spacing:.4px;
+    }
+
+    .brand p{
+      margin:2px 0 0;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn, button{
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      color:white;
+      background:linear-gradient(135deg, var(--red), var(--red2));
+      padding:11px 15px;
+      border-radius:14px;
+      font-weight:700;
+      transition:transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+      box-shadow:0 8px 24px rgba(163,0,0,.28);
+    }
+
+    .btn:hover, button:hover{transform:translateY(-2px)}
+    .btn.secondary, button.secondary{
+      background:#24242d;
+      box-shadow:none;
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .hero{
+      max-width:1280px;
+      margin:0 auto;
+      padding:26px 18px 10px;
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:18px;
+    }
+
+    .hero-card, .panel{
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border:1px solid rgba(255,255,255,.07);
+      box-shadow:var(--shadow);
+      border-radius:var(--radius);
+    }
+
+    .hero-card{padding:24px}
+    .hero-card h2{
+      margin:0 0 8px;
+      font-size:2.2rem;
+      line-height:1.1;
+    }
+    .accent{color:#ff6b6b}
+    .hero-card p{
+      color:var(--muted);
+      margin:10px 0;
+      font-size:1.02rem;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .stat{
+      padding:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:1.25rem;
+      color:#fff;
+    }
+
+    .panel{padding:22px}
+    .panel h3{margin-top:0}
+    .panel ul{margin:10px 0 0 18px; color:var(--muted); padding:0}
+    .panel li{margin:8px 0}
+
+    .container{
+      max-width:1280px;
+      margin:0 auto;
+      padding:14px 18px 70px;
+    }
+
+    .toolbar{
+      display:grid;
+      grid-template-columns:1.2fr .8fr .8fr;
+      gap:12px;
+      margin:14px 0 20px;
+    }
+
+    .search, .select{
+      width:100%;
+      padding:14px 15px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      background:#111118;
+      color:var(--text);
+      outline:none;
+    }
+
+    .section{
+      margin-top:22px;
+      padding:18px;
+      border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,43,43,.07), rgba(255,255,255,.015));
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow:var(--shadow);
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+
+    .section-title h2{
+      margin:0;
+      font-size:1.6rem;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:.9rem;
+      padding:8px 12px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:999px;
+      color:#ffd8d8;
+    }
+
+    .section-intro{
+      color:var(--muted);
+      margin:6px 0 16px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:16px;
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .card-header{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+    }
+
+    .tag{
+      display:inline-block;
+      background:rgba(255,43,43,.12);
+      border:1px solid rgba(255,43,43,.35);
+      color:#ffb1b1;
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:.82rem;
+      font-weight:700;
+    }
+
+    .question{
+      margin:0;
+      font-size:1.08rem;
+      font-weight:800;
+    }
+
+    .subprompt{
+      margin:0;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    .answer-box{
+      background:#101018;
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;
+      padding:14px;
+    }
+
+    .answer-title{
+      margin:0 0 8px;
+      color:#ffbaba;
+      font-size:.95rem;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+
+    .answer{
+      margin:0;
+      color:#f3f3f5;
+      white-space:pre-wrap;
+    }
+
+    .practice-tools{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
+
+    .practice-block{
+      background:#101018;
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;
+      padding:14px;
+    }
+
+    .practice-block h4{
+      margin:0 0 10px;
+      font-size:.98rem;
+    }
+
+    .textarea{
+      width:100%;
+      min-height:110px;
+      resize:vertical;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+      background:#0d0d14;
+      color:var(--text);
+      padding:12px;
+      outline:none;
+    }
+
+    .controls{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .result{
+      margin-top:10px;
+      border-radius:14px;
+      padding:11px 12px;
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      min-height:44px;
+    }
+
+    .result.good{border:1px solid rgba(36,209,111,.4); color:#d8ffe8}
+    .result.mid{border:1px solid rgba(255,209,102,.4); color:#fff2cf}
+    .result.bad{border:1px solid rgba(255,43,43,.38); color:#ffd9d9}
+
+    .footer-note{
+      margin-top:26px;
+      color:var(--muted);
+      text-align:center;
+      font-size:.95rem;
+    }
+
+    .hidden{display:none !important}
+
+    @media (max-width: 1000px){
+      .hero, .toolbar, .cards, .practice-tools{grid-template-columns:1fr}
+      .hero-grid{grid-template-columns:1fr 1fr 1fr}
+    }
+
+    @media (max-width: 680px){
+      .hero-card h2{font-size:1.75rem}
+      .hero-grid{grid-template-columns:1fr}
+      .card-header{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">🎤</div>
+        <div>
+          <h1>Practica Speaking</h1>
+          <p>Todas las posibles preguntas de speaking para practicar, escuchar, grabar y comparar.</p>
+        </div>
+      </div>
+      <div class="actions">
+        <a class="btn secondary" href="#inicio">Inicio</a>
+        <a class="btn secondary" href="#preguntas">Preguntas</a>
+        <a class="btn secondary" href="#opiniones">Opiniones</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="hero" id="inicio">
+    <div class="hero-card">
+      <h2>Modo <span class="accent">práctica total</span> para tu speaking</h2>
+      <p>Acá tienes un sitio pensado para estudiar de verdad: incluye preguntas de cine, profile photos, education, university, opinions, conditionals, dream home y más. Cada tarjeta trae una respuesta modelo más completa para que practiques mejor.</p>
+      <p>También hay botones para escuchar la respuesta, grabar tu voz y comparar lo que dijiste con el modelo. Así puedes revisar si te acercas al texto y mejorar poco a poco.</p>
+      <div class="hero-grid">
+        <div class="stat"><strong id="countQuestions">0</strong><span>preguntas</span></div>
+        <div class="stat"><strong>🎙️</strong><span>grabación local</span></div>
+        <div class="stat"><strong>🔊</strong><span>audio del modelo</span></div>
+      </div>
+    </div>
+
+    <aside class="panel">
+      <h3>Cómo usar esta página</h3>
+      <ul>
+        <li>Lee la pregunta y luego escucha el modelo con <b>Play model</b>.</li>
+        <li>Pulsa <b>Start mic</b> para que el navegador intente transcribir lo que dices.</li>
+        <li>Si tu navegador no soporta esa función, igual puedes escribir tu respuesta manualmente.</li>
+        <li>Usa <b>Compare</b> para ver una similitud aproximada con la respuesta modelo.</li>
+        <li>La idea no es memorizar exactamente, sino acercarte en estructura, vocabulario y fluidez.</li>
+      </ul>
+    </aside>
+  </section>
+
+  <main class="container" id="preguntas">
+    <div class="toolbar">
+      <input id="searchInput" class="search" type="text" placeholder="Buscar por tema, pregunta o palabra clave..." />
+      <select id="sectionFilter" class="select">
+        <option value="all">Todas las secciones</option>
+      </select>
+      <select id="levelFilter" class="select">
+        <option value="all">Todos los tipos</option>
+        <option value="main">Preguntas principales</option>
+        <option value="follow-up">Follow-up</option>
+        <option value="opinion">Opinión</option>
+      </select>
+    </div>
+
+    <div id="app"></div>
+
+    <p class="footer-note">Nota: el análisis por micrófono depende del soporte del navegador para reconocimiento de voz. En algunos navegadores puede funcionar mejor en Chrome o Edge.</p>
+  </main>
+
+  <script>
+    const speakingData = [
+      {
+        id: 'u6a-cinema',
+        title: 'Unit 6A — The Cinema Interview',
+        intro: 'Preguntas sobre películas, preferencias y una película buena que hayas visto recientemente.',
+        items: [
+          {
+            type:'main',
+            label:'Film prompt',
+            question:'Can you think of a film you’ve seen which was incredibly funny?',
+            answer:`One film I’ve seen that was incredibly funny is Mr. Peabody and Sherman. I liked it because it has clever jokes, funny moments, and a style of humour that feels light but entertaining. Even though it is an animated film, it is enjoyable for both children and older people. I remember laughing because the characters are creative and the story is very dynamic.`
+          },
+          {
+            type:'main',
+            label:'Film prompt',
+            question:'Can you think of a film you’ve seen which made you feel good?',
+            answer:`A film that made me feel good was Inside Out 2. I liked it because it mixes emotional moments with funny scenes, so it feels touching but also entertaining. The story shows personal growth and emotions in a way that feels meaningful, and when the film ends, it leaves a positive feeling. For me, it is the kind of movie that can cheer you up and also make you think.`
+          },
+          {
+            type:'main',
+            label:'Film prompt',
+            question:'Can you think of a film you’ve seen which had a very sad ending?',
+            answer:`A film I’ve seen with a very sad ending is Titanic. Even though most people already know what happens, the ending is still emotional because of the love story and the sacrifice. The final scenes are memorable and make the audience feel the sadness very strongly. It is one of those endings that stays in your mind for a long time.`
+          },
+          {
+            type:'main',
+            label:'Film prompt',
+            question:'Can you think of a film you’ve seen several times?',
+            answer:`I’ve seen Shrek 2 several times because it is one of my favourite animated films. I never get tired of it because the humour is very good, the characters are memorable, and the soundtrack is excellent. Also, I think it is a film that is funny every time you watch it, even if you already know the story. That is why I always enjoy rewatching it.`
+          },
+          {
+            type:'main',
+            label:'Film prompt',
+            question:'Can you think of a film you’ve seen which sent you to sleep?',
+            answer:`One film that almost sent me to sleep was Before You. It was not completely bad, but for me some parts felt too slow and not very exciting. Sometimes, if a film has a slow rhythm and not much action, I start losing interest. That happened to me with this film, so I felt sleepy while watching it.`
+          },
+          {
+            type:'main',
+            label:'Film prompt',
+            question:'Can you think of a film you’ve seen which had a memorable soundtrack?',
+            answer:`A film with a memorable soundtrack was Deadpool 3. I remember the songs because they were fun, energetic, and they matched the style of the movie very well. A good soundtrack can make scenes feel more powerful, and in this case I think the music helped make the film even more entertaining. It is one of the reasons why the movie stood out for me.`
+          },
+          {
+            type:'main',
+            label:'Preference',
+            question:'Do you prefer seeing films at home or in the cinema?',
+            answer:`I usually prefer seeing films at home because I feel more comfortable and relaxed there. At home I can pause the film, get snacks easily, and watch everything in a quieter environment. The cinema can be exciting for big releases, but in my case I enjoy being at home more because it feels more personal and less tiring. So overall, home is the option I prefer.`
+          },
+          {
+            type:'main',
+            label:'Preference',
+            question:'Do you prefer seeing American films, other foreign films, or films from your country?',
+            answer:`I generally prefer American films, especially animated and action films, because they are usually creative, entertaining, and visually impressive. However, I also like watching foreign films from other countries when they have subtitles, because they help me practise English and learn a little about different cultures. So my main preference is American films, but I am also open to other kinds of cinema.`
+          },
+          {
+            type:'main',
+            label:'Preference',
+            question:'Do you prefer seeing foreign films dubbed or with subtitles?',
+            answer:`I prefer seeing foreign films with subtitles because I like hearing the original voices of the actors. I think the real voice gives more emotion and makes the performance feel more authentic. Also, subtitles help me pay attention to pronunciation and language, which is useful when I want to practise English. For those reasons, I usually choose subtitles instead of dubbing.`
+          },
+          {
+            type:'follow-up',
+            label:'Good film',
+            question:'Tell me about a really good film you’ve seen in the last year.',
+            answer:`A really good film I’ve seen in the last year is Inside Out 2. It is an animated film directed by Kelsey Mann, and I would recommend it because it is emotional, funny, and meaningful at the same time. The story shows Riley as a teenager, and the film is set both in her real life and inside her mind, where her emotions interact. I liked it because it feels modern, easy to understand, and emotionally strong.`
+          },
+          {
+            type:'follow-up',
+            label:'Good film',
+            question:'What kind of film is it?',
+            answer:`It is an animated comedy-drama with emotional moments. It has funny scenes, but it also talks about changes, feelings, and personal growth. Because of that mix, the film feels entertaining and meaningful instead of being only funny or only serious.`
+          },
+          {
+            type:'follow-up',
+            label:'Good film',
+            question:'Is it based on a book or on a real event?',
+            answer:`No, it is not based on a book or on a real event. However, it still feels realistic in the way it shows emotions and the challenges of growing up. That is one reason why many people can connect with the story even though it is fictional.`
+          },
+          {
+            type:'follow-up',
+            label:'Good film',
+            question:'Where and when is it set?',
+            answer:`It is set in the present day, mainly inside Riley’s mind and in her real life as a teenager. This combination makes the film interesting because we can see both what happens around her and what happens emotionally inside her. That setting helps explain the story in a creative way.`
+          },
+          {
+            type:'follow-up',
+            label:'Good film',
+            question:'Who stars in it? Who is it directed by?',
+            answer:`The film is directed by Kelsey Mann, and some of the voices are provided by Amy Poehler and Maya Hawke. Since it is an animated movie, the voice actors are very important because they give personality and emotion to the characters. In my opinion, the cast does a very good job.`
+          },
+          {
+            type:'follow-up',
+            label:'Good film',
+            question:'Does it have a good plot?',
+            answer:`Yes, I think it has a good plot. The story is about Riley and her emotions, and in this sequel new emotions appear, especially Anxiety, which causes confusion and problems in her mind. The plot is easy to follow, but it still feels emotional and interesting, so it works well for many kinds of viewers.`
+          },
+          {
+            type:'follow-up',
+            label:'Good film',
+            question:'Does it have a good soundtrack?',
+            answer:`Yes, it does. The soundtrack helps create emotion in many scenes and makes the story feel stronger. Music is very important in animated films because it supports both the funny and emotional moments, and I think this film uses it very well.`
+          },
+          {
+            type:'follow-up',
+            label:'Good film',
+            question:'Why do you like it?',
+            answer:`I like it because it is enjoyable, emotional, and meaningful. It has a good plot, memorable characters, and an important message about emotions and growing up. I also like it because I watched the first film when I was younger, so this sequel felt familiar but also new. For me, it is a film worth watching.`
+          }
+        ]
+      },
+      {
+        id: 'u6b-profile',
+        title: 'Unit 6B — Profile photos',
+        intro: 'Preguntas para hablar sobre tu foto de perfil, por qué la elegiste y qué transmite.',
+        items: [
+          {
+            type:'main',
+            label:'Social media',
+            question:'Do you have a profile photo or photos that you use on social media?',
+            answer:`Yes, I do. I usually use a normal photo of myself, although sometimes I also choose an image related to something I like. I do not normally use very strange or exaggerated pictures because I prefer something simple and clear. I think a profile photo should represent you in a natural way.`
+          },
+          {
+            type:'main',
+            label:'Social media',
+            question:'Why did you choose them?',
+            answer:`I chose them because I want my profile photo to look simple, nice, and natural. Sometimes I choose a picture that shows my face clearly, and other times I choose one that reflects my personality or interests. I do not like making it too complicated, so I prefer a photo that feels normal and easy to recognize.`
+          },
+          {
+            type:'main',
+            label:'Social media',
+            question:'How often do you change them?',
+            answer:`I do not change my profile photo very often. Usually, I only change it when I find a photo that looks better or when I feel like updating my image after a long time. In general, I keep the same photo for quite a while because changing it all the time is not very important to me.`
+          },
+          {
+            type:'follow-up',
+            label:'Interpretation',
+            question:'Is your profile photo type included in the article?',
+            answer:`Yes, I think my profile photo type is probably included because it is closest to the portrait type. It is a simple photo that shows my face clearly, without trying to be too dramatic or unusual. So if I had to choose one category from the article, that would probably be the one.`
+          },
+          {
+            type:'follow-up',
+            label:'Interpretation',
+            question:'Do you agree with any of the positive or negative interpretations of your profile photo?',
+            answer:`I partly agree with the positive interpretation because I think a clear portrait can show that you are comfortable with your appearance and that you want something normal and honest. However, I do not agree with the negative interpretation that says it means you are boring. In many cases, people simply want a clean and practical photo, and that does not mean they have no personality.`
+          },
+          {
+            type:'follow-up',
+            label:'Interpretation',
+            question:'If not, what is your interpretation of your photo?',
+            answer:`My interpretation of my photo is that it shows I prefer simplicity. I like things that are clear and natural, so I do not need to use a very dramatic image to represent myself. For me, a profile photo is just a way for people to recognize you, not necessarily a way to show everything about your personality.`
+          },
+          {
+            type:'follow-up',
+            label:'People around you',
+            question:'Can you think of any friends or family members whose photos fit the interpretations in the article?',
+            answer:`Yes, I can think of a few. Some of my friends use party photos because they enjoy going out and showing fun moments with other people. Also, some family members use family photos because their children are very important to them. So I think the article is exaggerated sometimes, but in some cases those photo types really do match people’s lifestyles.`
+          }
+        ]
+      },
+      {
+        id: 'u7a-education',
+        title: 'Unit 7A — Your Education',
+        intro: 'Todas las preguntas del speaking sobre colegio, materias, tareas, reglas y disciplina.',
+        items: [
+          {
+            type:'main',
+            label:'Your school',
+            question:'What kind of secondary school did you go to? Was it a mixed school or single-sex?',
+            answer:`I went to a mixed secondary school. Boys and girls studied together, and for me that felt normal and comfortable. I think a mixed school can help students learn how to communicate and work with different kinds of people, so overall I think it was a good environment for me.`
+          },
+          {
+            type:'main',
+            label:'Your school',
+            question:'Did you like it?',
+            answer:`Yes, I did. I liked my school because I met very important people there, especially my best friend, and that made my experience much better. Of course, not everything was perfect, but in general I have good memories of that time because I learned many things and shared a lot of moments with my classmates.`
+          },
+          {
+            type:'main',
+            label:'Your school',
+            question:'How many students were there in each class? Do you think it was the right number?',
+            answer:`There were about twenty students in my class. I think that was a good number because the classroom did not feel too crowded, and the teacher could still pay attention to everyone. If a class is too large, some students can easily be ignored, so I think my class size was quite balanced.`
+          },
+          {
+            type:'main',
+            label:'Your school',
+            question:'What time did your school day start and finish?',
+            answer:`My school day started at 7:00 a.m. and finished at 3:30 p.m. For me, starting at seven in the morning felt too early because waking up that early every day was tiring. By the end of the day, I was often tired, especially when I also had homework to do at home.`
+          },
+          {
+            type:'main',
+            label:'Subjects and homework',
+            question:'Which subjects were you good and bad at?',
+            answer:`I was good at Maths, and I was not very good at English at that time. Maths felt more natural to me because I liked solving problems and working with logic. English was harder for me before, especially because I did not practise it as much as I do now.`
+          },
+          {
+            type:'main',
+            label:'Subjects and homework',
+            question:'Which was your favourite subject?',
+            answer:`My favourite subject was Physics because I enjoyed learning about how things work. I liked topics related to movement, forces, and practical explanations of real-life phenomena. It was one of the subjects that made me feel more curious, and that is one reason why I enjoyed it so much.`
+          },
+          {
+            type:'main',
+            label:'Subjects and homework',
+            question:'How often did you do PE or play sports?',
+            answer:`I used to do PE at school and I also used to play soccer. I enjoyed it more before the pandemic, but after that period I stopped playing regularly. Even so, during school years, sports were a normal part of my routine and they helped me relax a little after studying.`
+          },
+          {
+            type:'main',
+            label:'Subjects and homework',
+            question:'How much homework did you usually get? Did you think it was too much?',
+            answer:`I usually got about one or two hours of homework every day. Sometimes that amount was manageable, but during exam periods it felt like too much because there were many subjects at the same time. So I would say it was not always excessive, but there were moments when it definitely felt heavy.`
+          },
+          {
+            type:'main',
+            label:'Rules and discipline',
+            question:'Did you have to wear a uniform? Did you like it? Why or why not?',
+            answer:`Yes, I had to wear a uniform. I did not really like it because I found it uncomfortable, and sometimes I felt it did not let students express themselves very much. However, I understand that schools use uniforms to create order and equality, so even though I did not enjoy wearing it, I can see why schools require it.`
+          },
+          {
+            type:'main',
+            label:'Rules and discipline',
+            question:'Were your teachers too strict, or not strict enough? Why? What kind of punishments did they use?',
+            answer:`I think some teachers were strict, but that was not always a bad thing because it helped students behave better and take classes more seriously. Usually, the punishments were not extreme. They often gave warnings, called parents, or made students stay after class. So I would say they were strict enough in many cases, although a few teachers could be too serious sometimes.`
+          },
+          {
+            type:'main',
+            label:'Rules and discipline',
+            question:'Did pupils behave well, or did they misbehave?',
+            answer:`Most pupils behaved well, but of course there were moments when some students misbehaved, including me sometimes. In general, the class was not chaotic, but as in any school, there were people who talked too much, did not pay attention, or broke small rules. So overall, behaviour was mostly good, but not perfect.`
+          }
+        ]
+      },
+      {
+        id: 'u7a-chinese',
+        title: 'Unit 7A — Chinese education system discussion',
+        intro: 'Preguntas para opinar sobre el sistema educativo chino comparado con otros contextos.',
+        items: [
+          {
+            type:'opinion',
+            label:'Education systems',
+            question:'What do you think is good or bad about the Chinese system?',
+            answer:`I think one good thing about the Chinese system is that it seems to teach discipline, effort, and respect for study. Students may become very responsible and academically strong. However, one bad thing is that it can also seem too strict and stressful. If students only focus on results and pressure, they may feel exhausted. So I think it has strengths, but it also looks very demanding.`
+          },
+          {
+            type:'opinion',
+            label:'Education systems',
+            question:'Would secondary school students in your country be shocked by the Chinese education system? Why or why not?',
+            answer:`Yes, I think many secondary school students in my country would be shocked by it. The reason is that it appears stricter, more demanding, and more focused on discipline and performance than what many students are used to. Longer study hours and stronger academic pressure could feel difficult or even overwhelming for them. So I think the difference would be very noticeable.`
+          },
+          {
+            type:'opinion',
+            label:'Education systems',
+            question:'Would you prefer to study in a British school or a Chinese one? Where would you prefer to work as a teacher?',
+            answer:`I would prefer to study in a British school because it seems more balanced between discipline and personal freedom. It gives the impression of being serious, but not as intense as the Chinese system. As a teacher, I would also prefer to work in a British school because I think the environment would probably be less stressful and more flexible. That sounds more comfortable to me.`
+          }
+        ]
+      },
+      {
+        id: 'u7a-university',
+        title: 'Unit 7A — University speaking',
+        intro: 'Respuestas posibles para los tres caminos: ya fuiste, estás ahora, o quieres ir a la universidad.',
+        items: [
+          {
+            type:'main',
+            label:'University',
+            question:'Have you been to university?',
+            answer:`Yes, I have. I am connected to university studies, and the field I study is Electronic Engineering. What I like about it is that it combines theory with practical applications and helps me understand technology better. At the same time, it can be challenging because of the level of maths, projects, and pressure. So overall, it is demanding, but also very interesting.`
+          },
+          {
+            type:'follow-up',
+            label:'University',
+            question:'What did you study?',
+            answer:`I studied Electronic Engineering. I chose that field because I am interested in technology, electronics, and the way systems work. I like subjects that help solve real problems and explain how devices or control systems function in practice.`
+          },
+          {
+            type:'follow-up',
+            label:'University',
+            question:'Did you enjoy it?',
+            answer:`Yes, I enjoyed many parts of it, especially the subjects related to electronics, control, and practical applications. I like learning how theoretical concepts can be used in real systems. Of course, some parts were stressful, but in general I found the career interesting and useful.`
+          },
+          {
+            type:'follow-up',
+            label:'University',
+            question:'Was there anything you didn’t enjoy?',
+            answer:`Yes, there were some parts I did not enjoy so much. Sometimes the workload was heavy, and there were difficult maths topics, tight deadlines, and stressful periods during exams or projects. So even though I like the career overall, there are definitely moments that feel exhausting.`
+          },
+          {
+            type:'main',
+            label:'University now',
+            question:'Are you at university now?',
+            answer:`Yes, I am. Right now I am studying Electronic Engineering, and it is a career that requires a lot of effort but also gives useful knowledge. I am still learning many things, and step by step I feel that I understand more about electronics, systems, and practical engineering work.`
+          },
+          {
+            type:'follow-up',
+            label:'University now',
+            question:'What are you studying?',
+            answer:`I am studying Electronic Engineering. It is a field that includes topics such as electronics, circuits, control, and technology in general. I like it because it combines logical thinking with practical applications.`
+          },
+          {
+            type:'follow-up',
+            label:'University now',
+            question:'Are you enjoying it?',
+            answer:`Yes, I am enjoying it overall. Some subjects are difficult, but I like learning about technology and understanding how systems work. When I see that what I learn can be useful in real life, that makes the effort feel more worthwhile.`
+          },
+          {
+            type:'follow-up',
+            label:'University now',
+            question:'Is there anything you don’t like?',
+            answer:`Yes. Sometimes I do not like the stress, the heavy workload, and the pressure that comes with exams or deadlines. There are moments when everything feels too intense, especially when many assignments come together. So I enjoy the career, but not every part of student life.`
+          },
+          {
+            type:'follow-up',
+            label:'University now',
+            question:'What are you planning to do when you graduate?',
+            answer:`When I graduate, I am planning to work in an area related to engineering and technology. I would also like to keep learning practical skills and improve my experience little by little. My idea is not only to finish university, but also to become better prepared for real professional work.`
+          },
+          {
+            type:'main',
+            label:'Future university',
+            question:'Do you want to go to university?',
+            answer:`Yes, I do. I think university can open important opportunities and help a person develop both professionally and personally. It is not always easy, but it can be very valuable if you choose a field that truly interests you.`
+          },
+          {
+            type:'follow-up',
+            label:'Future university',
+            question:'What would you like to study? Why?',
+            answer:`I would like to study Electronic Engineering because I am interested in technology, circuits, and the way electronic systems solve real problems. I like fields where theory can be connected to practical applications, and that is one reason why this career attracts me.`
+          },
+          {
+            type:'follow-up',
+            label:'Future university',
+            question:'Do you think you’ll enjoy it?',
+            answer:`Yes, I think I will enjoy it, although I know it can be difficult. I expect some parts to be stressful, especially the harder subjects, but I also believe it will be satisfying because I will be learning things that I actually care about.`
+          },
+          {
+            type:'follow-up',
+            label:'Alternative path',
+            question:'No? Why not? What would you like to do instead?',
+            answer:`If I had to answer no, I would say it is because university is not the only way to learn useful skills. Some people prefer working early, studying technical courses, or learning more practical things directly. In that case, I would probably choose a path related to technology and training through practical experience.`
+          }
+        ]
+      },
+      {
+        id: 'opiniones',
+        title: 'Organizing and presenting your opinions',
+        intro: 'Ideas más largas para responder sobre temas de escuela y universidad.',
+        items: [
+          {
+            type:'opinion',
+            label:'School opinion',
+            question:'Do you agree that school doesn’t prepare students for life?',
+            answer:`I partly agree that school does not always prepare students well for life. First of all, many schools focus too much on theory and not enough on practical skills. Students should also learn things like personal finance, communication, problem-solving, healthy habits, and how to handle real responsibilities. My second point is that many students finish school without feeling ready for adult life. So I think school is important, but it should include more useful real-world preparation.`
+          },
+          {
+            type:'opinion',
+            label:'School opinion',
+            question:'Do you agree that physical education should be optional, and boys and girls should be taught separately?',
+            answer:`I only partly agree with that idea. On one hand, physical education is important because exercise helps students stay healthy and reduce stress. If it became optional, some students might do almost no physical activity at all. On the other hand, I understand that not everyone enjoys the same sports or feels comfortable in the same environment. So instead of making it fully optional, I think schools should make PE more flexible and more inclusive.`
+          },
+          {
+            type:'opinion',
+            label:'School opinion',
+            question:'Do you agree that primary pupils shouldn’t get homework, and secondary students should have no more than one hour a night?',
+            answer:`I mostly agree with that idea. Younger children need time to rest, play, and spend time with their families, so too much homework at that age can be unnecessary. For secondary students, a limited amount of homework makes sense, but it should not be excessive every day. If students always feel overloaded, homework stops being useful and just becomes stress. So I think moderation is the best option.`
+          },
+          {
+            type:'opinion',
+            label:'School opinion',
+            question:'Do you agree that schools should spend most of the time on maths, science, and IT, and less on arts subjects like history and literature?',
+            answer:`I do not completely agree. Maths, science, and IT are very important because they are useful in modern life and many careers depend on them. However, arts subjects like history and literature also matter because they help students think critically, understand society, and improve communication. If schools only focused on technical subjects, education would become too limited. I think there should be a balance.`
+          },
+          {
+            type:'opinion',
+            label:'University opinion',
+            question:'Do you agree that university courses are too long and should be a maximum of two years?',
+            answer:`I do not fully agree with that statement. Some courses do feel very long, and in some cases programmes could probably be more efficient. However, not every degree can be reduced so easily. Careers like engineering, medicine, or other technical fields need enough time to develop strong knowledge and practical ability. So maybe some courses could be shorter, but a general two-year limit would not work for everything.`
+          },
+          {
+            type:'opinion',
+            label:'University opinion',
+            question:'Do you agree that university students shouldn’t be allowed to have jobs during term-time?',
+            answer:`I do not completely agree. It is true that working during term-time can affect a student’s academic performance if the schedule is too heavy. However, many students need to work for financial reasons, and having a job can also teach responsibility and time management. I think the problem is not work itself, but whether the student can balance both things in a healthy way.`
+          },
+          {
+            type:'opinion',
+            label:'University opinion',
+            question:'Do you agree that students should choose to study a subject they love, not necessarily one that will get them a good job?',
+            answer:`I partly agree. Studying something you love can increase motivation, interest, and the desire to improve, which is very important for long-term success. But at the same time, job opportunities also matter because people need stability and income. For me, the ideal choice is a balance between passion and practicality. It is better to choose something you like, but also something that gives reasonable future opportunities.`
+          },
+          {
+            type:'opinion',
+            label:'University opinion',
+            question:'Do you agree that university students should live independently, not with their parents?',
+            answer:`I think it depends on the student’s situation. Living independently can help a person become more responsible and mature, because they learn how to organize money, time, and daily life. However, not everyone has the financial possibility to do that, and living with parents can also be practical and supportive. So I do not think there should be only one correct option for everyone.`
+          }
+        ]
+      },
+      {
+        id: 'u7b-conditionals',
+        title: 'Unit 7B — Conditionals',
+        intro: 'Frases para practicar first and second conditional con respuestas más completas.',
+        items: [
+          {
+            type:'main',
+            label:'Conditional',
+            question:'If I could live anywhere in my town or city, where would I live?',
+            answer:`If I could live anywhere in my city, I would choose a quiet area with less traffic and a more peaceful atmosphere. I would like a place where I can concentrate, rest well, and feel comfortable. At the same time, it should not be too far from important places like shops, transport, or university.`
+          },
+          {
+            type:'main',
+            label:'Conditional',
+            question:'If I have some free time this weekend, what will I do?',
+            answer:`If I have some free time this weekend, I will probably watch a film, rest a little, or work on my website and study materials. Sometimes I also like using free time to organize my things or just relax at home. I do not always make big plans, but I try to use the time in a useful or enjoyable way.`
+          },
+          {
+            type:'main',
+            label:'Conditional',
+            question:'If I won a dream holiday in a competition, what would I do?',
+            answer:`If I won a dream holiday in a competition, I would choose a place I have always wanted to visit, maybe Japan or another interesting country. I would like to enjoy the trip, learn about the culture, and try new experiences. It would be exciting because it is not something that happens every day.`
+          },
+          {
+            type:'main',
+            label:'Conditional',
+            question:'If I could choose any car I liked, what would I choose?',
+            answer:`If I could choose any car I liked, I would probably choose one that is modern, comfortable, and reliable rather than something extremely expensive. For me, practicality matters a lot, so I would want a car that looks good but is also useful for everyday life. I do not need something too extravagant.`
+          },
+          {
+            type:'main',
+            label:'Conditional',
+            question:'If I get a new phone this year, what will I do with it?',
+            answer:`If I get a new phone this year, I will mainly use it for studying, videos, communication, and everyday tasks. I would also like it to be fast and practical, because I use my phone for many things during the day. So more than luxury, I care about it working well and helping me with daily activities.`
+          },
+          {
+            type:'main',
+            label:'Conditional',
+            question:'If I could choose my ideal job, what would it be?',
+            answer:`If I could choose my ideal job, it would be something related to engineering and technology. I would like a job where I can solve problems, learn useful skills, and work on things that have practical value. It would also be important for me to feel that the job helps me grow professionally.`
+          },
+          {
+            type:'main',
+            label:'Conditional',
+            question:'If I don’t have time to do the homework tonight, what will I do?',
+            answer:`If I do not have time to do the homework tonight, I will try to do it as early as possible tomorrow. I usually prefer not to leave everything for the last moment, but sometimes there are too many things to do. In that case, I would organize my time and try to finish it without falling behind.`
+          },
+          {
+            type:'main',
+            label:'Conditional',
+            question:'If I was asked to work abroad for a year, what would I do?',
+            answer:`If I was asked to work abroad for a year, I would probably feel nervous at first because it would be a big change. However, I think I would accept it because it could be a very valuable experience. Living in another country could help me grow, improve my independence, and learn new things.`
+          },
+          {
+            type:'main',
+            label:'Conditional',
+            question:'If I couldn’t use the internet for a week, how would I feel?',
+            answer:`If I could not use the internet for a week, I would probably feel a bit lost at first because I use it for study, communication, and entertainment. Still, after some time I would try to adapt and do other things, such as reading, organizing my notes, or resting more. It would be difficult, but not impossible.`
+          },
+          {
+            type:'main',
+            label:'Conditional',
+            question:'If I feel like going out tonight, what will I do?',
+            answer:`If I feel like going out tonight, I will probably go for a short walk, spend time with a friend, or do something simple outside. I am not always someone who makes big going-out plans, so even a small outing can be enough for me. It depends on my mood and energy.`
+          }
+        ]
+      },
+      {
+        id: 'u7b-dreamhome',
+        title: 'Unit 7B — Dream home',
+        intro: 'Preguntas para describir la casa ideal con una respuesta modelo más larga.',
+        items: [
+          {
+            type:'main',
+            label:'Dream home',
+            question:'Where would your dream home be?',
+            answer:`My dream home would be in a quiet place, maybe in a calm part of the city or somewhere near the countryside. I would like a peaceful environment because it helps me relax and concentrate. At the same time, I would not want it to be too isolated, so it should still be connected to the places I need.`
+          },
+          {
+            type:'main',
+            label:'Dream home',
+            question:'What kind of house or flat would it be?',
+            answer:`It would be a modern and comfortable house rather than a very small flat. I would like it to feel practical, clean, and cozy at the same time. It does not need to be extremely luxurious, but it should have enough space and a design that feels pleasant to live in.`
+          },
+          {
+            type:'main',
+            label:'Dream home',
+            question:'How many rooms would it have?',
+            answer:`I think my dream home would have three or four rooms. That would be enough space for daily life without becoming too large or difficult to maintain. I would especially like one room to be a comfortable study or work area where I can focus well.`
+          },
+          {
+            type:'main',
+            label:'Dream home',
+            question:'What special features would it have?',
+            answer:`It would have big windows, good lighting, a comfortable desk for studying or working, and reliable internet. I would also like a nice place to relax, maybe a small terrace or a cozy living room. For me, the most important special feature is that it should feel comfortable for both rest and productivity.`
+          },
+          {
+            type:'main',
+            label:'Dream home',
+            question:'What would the decoration be like?',
+            answer:`The decoration would be simple, modern, and clean. I would probably choose dark or neutral colours because I like that style, especially when it feels elegant but not overloaded. I would want the house to look nice, but also to feel calm and comfortable, not too full of unnecessary things.`
+          },
+          {
+            type:'follow-up',
+            label:'Dream home',
+            question:'Describe your dream home in more detail.',
+            answer:`My dream home would be in a quiet and comfortable place, maybe near the countryside or in a peaceful area of the city. It would be a modern house with three or four rooms, big windows, and plenty of natural light. I would want a good study area, reliable internet, and a cozy place to rest. The decoration would be simple and modern, probably with dark colours and a clean style. More than luxury, I want a home that feels calm, practical, and pleasant to live in every day.`
+          }
+        ]
+      },
+      {
+        id: 'canyousay',
+        title: 'Can you say this in English?',
+        intro: 'Prompts finales para practicar producción oral libre.',
+        items: [
+          {
+            type:'main',
+            label:'Free production',
+            question:'Tell an anecdote about something that happened to you using the past simple, past continuous, and past perfect.',
+            answer:`One day, I was going to class when I realized I had forgotten something important at home. I was already walking quickly, and I was thinking about being late, when I remembered that I had left my notes on my desk. By the time I noticed it, I had already gone quite far, so I had to decide whether to continue or go back. In the end, I went back, took my notes, and arrived a little late, but at least I had everything I needed.`
+          },
+          {
+            type:'main',
+            label:'Free production',
+            question:'Talk about three past habits and three present habits of yours.',
+            answer:`In the past, I used to play soccer more often, I used to spend less time practising English, and I used to wake up without planning my day very well. Now, I usually spend more time studying, I often work on projects or websites, and I try to organize my tasks better. Comparing past and present habits helps me notice how my routine and priorities have changed over time.`
+          },
+          {
+            type:'main',
+            label:'Free production',
+            question:'Describe a film, saying where it was set, what it is based on, who it was directed by, and what you thought of it.',
+            answer:`A film I would describe is Inside Out 2. It is set in Riley’s mind and in her real life as a teenager, so the setting is both imaginative and relatable. It is not based on a book or a real event, but it feels realistic emotionally. It was directed by Kelsey Mann, and I thought it was a very good film because it is emotional, entertaining, and meaningful.`
+          },
+          {
+            type:'main',
+            label:'Free production',
+            question:'Make deductions about a photo on a friend’s phone using might be, must be, and can’t be.',
+            answer:`This photo might be from a family trip because everyone looks relaxed and happy. It must be a special day because the people in the picture seem dressed better than usual and they are all together. It can’t be an ordinary school day because the background looks like a tourist place, not a classroom or a normal street near home.`
+          }
+        ]
+      }
+    ];
+
+    const app = document.getElementById('app');
+    const sectionFilter = document.getElementById('sectionFilter');
+    const levelFilter = document.getElementById('levelFilter');
+    const searchInput = document.getElementById('searchInput');
+    const countQuestions = document.getElementById('countQuestions');
+
+    const flatItems = [];
+    speakingData.forEach(section => {
+      const opt = document.createElement('option');
+      opt.value = section.id;
+      opt.textContent = section.title;
+      sectionFilter.appendChild(opt);
+      section.items.forEach(item => flatItems.push({sectionId: section.id, sectionTitle: section.title, ...item}));
+    });
+    countQuestions.textContent = flatItems.length;
+
+    function uid(){
+      return 'id-' + Math.random().toString(36).slice(2,10);
+    }
+
+    function escapeHtml(str){
+      return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+
+    function render(){
+      const q = searchInput.value.trim().toLowerCase();
+      const sf = sectionFilter.value;
+      const lf = levelFilter.value;
+      app.innerHTML = '';
+
+      speakingData.forEach(section => {
+        if(sf !== 'all' && sf !== section.id) return;
+
+        const filtered = section.items.filter(item => {
+          const matchesType = lf === 'all' || item.type === lf;
+          const hay = `${section.title} ${item.label} ${item.question} ${item.answer}`.toLowerCase();
+          const matchesSearch = !q || hay.includes(q);
+          return matchesType && matchesSearch;
+        });
+
+        if(!filtered.length) return;
+
+        const sectionEl = document.createElement('section');
+        sectionEl.className = 'section';
+        sectionEl.id = section.id;
+        sectionEl.innerHTML = `
+          <div class="section-title">
+            <h2>${escapeHtml(section.title)}</h2>
+            <span class="pill">${filtered.length} item(s)</span>
+          </div>
+          <p class="section-intro">${escapeHtml(section.intro)}</p>
+          <div class="cards"></div>
+        `;
+        const cards = sectionEl.querySelector('.cards');
+
+        filtered.forEach(item => {
+          const id = uid();
+          const safeAnswer = escapeHtml(item.answer);
+          const safeQuestion = escapeHtml(item.question);
+          const safeLabel = escapeHtml(item.label);
+          const typeText = item.type === 'main' ? 'Pregunta principal' : item.type === 'follow-up' ? 'Follow-up' : 'Opinión';
+
+          const article = document.createElement('article');
+          article.className = 'card';
+          article.dataset.section = section.id;
+          article.dataset.type = item.type;
+          article.dataset.answer = item.answer;
+          article.innerHTML = `
+            <div class="card-header">
+              <div>
+                <span class="tag">${safeLabel}</span>
+                <p class="question">${safeQuestion}</p>
+                <p class="subprompt">Tipo: ${typeText}</p>
+              </div>
+            </div>
+
+            <div class="answer-box">
+              <p class="answer-title">Model answer</p>
+              <p class="answer" id="model-${id}">${safeAnswer}</p>
+            </div>
+
+            <div class="practice-tools">
+              <div class="practice-block">
+                <h4>🎧 Escuchar y grabar</h4>
+                <div class="controls">
+                  <button data-action="speak" data-id="${id}">Play model</button>
+                  <button class="secondary" data-action="start" data-id="${id}">Start mic</button>
+                  <button class="secondary" data-action="stop" data-id="${id}">Stop mic</button>
+                </div>
+                <div class="result" id="mic-${id}">Aquí aparecerá la transcripción del micrófono si el navegador la soporta.</div>
+              </div>
+
+              <div class="practice-block">
+                <h4>📝 Escribe o corrige tu respuesta</h4>
+                <textarea class="textarea" id="input-${id}" placeholder="Escribe aquí tu respuesta en inglés, o usa el micrófono si funciona..."></textarea>
+                <div class="controls">
+                  <button data-action="compare" data-id="${id}">Compare</button>
+                  <button class="secondary" data-action="copy" data-id="${id}">Copy model</button>
+                  <button class="secondary" data-action="clear" data-id="${id}">Clear</button>
+                </div>
+                <div class="result" id="result-${id}">Tu resultado de similitud aparecerá aquí.</div>
+              </div>
+            </div>
+          `;
+          cards.appendChild(article);
+        });
+
+        app.appendChild(sectionEl);
+      });
+    }
+
+    render();
+
+    searchInput.addEventListener('input', render);
+    sectionFilter.addEventListener('change', render);
+    levelFilter.addEventListener('change', render);
+
+    function normalizeText(text){
+      return (text || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function similarity(a, b){
+      const A = new Set(normalizeText(a).split(' ').filter(Boolean));
+      const B = new Set(normalizeText(b).split(' ').filter(Boolean));
+      if(!A.size || !B.size) return 0;
+      let inter = 0;
+      A.forEach(w => { if(B.has(w)) inter++; });
+      const score = (2 * inter) / (A.size + B.size);
+      return Math.round(score * 100);
+    }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognizers = {};
+
+    function createRecognizer(id){
+      if(!SpeechRecognition) return null;
+      const rec = new SpeechRecognition();
+      rec.lang = 'en-US';
+      rec.interimResults = true;
+      rec.continuous = true;
+      rec.onresult = (event) => {
+        let text = '';
+        for(let i = 0; i < event.results.length; i++){
+          text += event.results[i][0].transcript + ' ';
+        }
+        document.getElementById(`mic-${id}`).textContent = text.trim() || 'Listening...';
+        const textarea = document.getElementById(`input-${id}`);
+        textarea.value = text.trim();
+      };
+      rec.onerror = (event) => {
+        const box = document.getElementById(`mic-${id}`);
+        box.textContent = 'Mic error: ' + event.error + '. Prueba en Chrome o Edge y permite acceso al micrófono.';
+        box.className = 'result bad';
+      };
+      rec.onend = () => {
+        // user can restart manually
+      };
+      recognizers[id] = rec;
+      return rec;
+    }
+
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-action]');
+      if(!btn) return;
+      const action = btn.dataset.action;
+      const id = btn.dataset.id;
+      const modelText = document.getElementById(`model-${id}`)?.textContent || '';
+      const textarea = document.getElementById(`input-${id}`);
+      const micBox = document.getElementById(`mic-${id}`);
+      const resultBox = document.getElementById(`result-${id}`);
+
+      if(action === 'speak'){
+        const utter = new SpeechSynthesisUtterance(modelText);
+        utter.lang = 'en-US';
+        utter.rate = 0.95;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(utter);
+      }
+
+      if(action === 'start'){
+        if(!SpeechRecognition){
+          micBox.textContent = 'Tu navegador no soporta reconocimiento de voz aquí. Igual puedes escribir tu respuesta manualmente.';
+          micBox.className = 'result bad';
+          return;
+        }
+        try{
+          const rec = recognizers[id] || createRecognizer(id);
+          micBox.textContent = 'Listening... Speak now in English.';
+          micBox.className = 'result';
+          rec.start();
+        }catch(err){
+          micBox.textContent = 'No se pudo iniciar el micrófono. A veces pasa si ya está activo o si faltan permisos.';
+          micBox.className = 'result bad';
+        }
+      }
+
+      if(action === 'stop'){
+        const rec = recognizers[id];
+        if(rec){
+          try{ rec.stop(); }catch(err){}
+        }
+      }
+
+      if(action === 'compare'){
+        const userText = textarea.value.trim();
+        if(!userText){
+          resultBox.textContent = 'Primero escribe algo o usa el micrófono.';
+          resultBox.className = 'result bad';
+          return;
+        }
+        const score = similarity(userText, modelText);
+        let msg = `Similarity: ${score}% — `;
+        let cls = 'result ';
+        if(score >= 75){
+          msg += 'Muy bien. Tu respuesta se parece bastante al modelo. Sigue practicando pronunciación y ritmo.';
+          cls += 'good';
+        }else if(score >= 45){
+          msg += 'Vas bien. La idea general se parece, pero todavía puedes acercarte más al vocabulario o la estructura.';
+          cls += 'mid';
+        }else{
+          msg += 'Aún está algo lejos del modelo. Escucha la respuesta otra vez e intenta usar más palabras clave del ejemplo.';
+          cls += 'bad';
+        }
+        resultBox.textContent = msg;
+        resultBox.className = cls;
+      }
+
+      if(action === 'copy'){
+        textarea.value = modelText;
+        resultBox.textContent = 'Se copió la respuesta modelo al cuadro de práctica.';
+        resultBox.className = 'result mid';
+      }
+
+      if(action === 'clear'){
+        textarea.value = '';
+        resultBox.textContent = 'Cuadro limpiado. Puedes volver a practicar.';
+        resultBox.className = 'result';
+        if(micBox) {
+          micBox.textContent = 'Aquí aparecerá la transcripción del micrófono si el navegador la soporta.';
+          micBox.className = 'result';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
